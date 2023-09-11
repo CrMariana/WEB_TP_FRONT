@@ -1,1 +1,40 @@
-<p>iniciosesion works!</p>
+<link rel="stylesheet" href="iniciosesion.component.css">
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-5 col-lg-7 col-xl-6">
+        <img src="https://lh3.googleusercontent.com/p/AF1QipNbcjQbsn2ucOh0Q8BGosn8FU30d6WttiAvjE36=s1360-w1360-h1020"
+        width="700px" height="750px" alt="Sample image">
+      </div>
+
+      <div class="col-md-3 col-lg-5 col-xl-4 offset-xl-1 mt-3"> <!-- Ajusta el valor de mt-* según tus preferencias -->
+        <div class="text-right">
+          <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
+            style="width: 400px; height: auto;"  alt="logo">
+        </div>
+        <form>
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <input type="email" id="form3Example3" class="form-control form-control-lg"
+              placeholder="Enter a valid email address" />
+            <label class="form-label" for="form3Example3">Email address</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <input type="password" id="form3Example4" class="form-control form-control-lg"
+              placeholder="Enter password" />
+            <label class="form-label" for="form3Example4">Password</label>
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <button type="button" (click)="iniciosesion()" color="warn" class="btn btn btn-danger"
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Iniciar Sesión</button>
+            <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="#!"
+                class="link-danger">Register</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
