@@ -14,7 +14,11 @@ export class EditambienteComponent {
   ambiente: Ambiente = new Ambiente;
   areas: Area[] = [];
   pabellones: Pabellon[] = [];
-
+  urlFoto: string = '';
+  invalidUrl: boolean = false;
+  contacto: string = ''; 
+  
+  
   constructor(
     private route: ActivatedRoute,
     private service: MasterService,
@@ -47,11 +51,17 @@ loadArea() {
   });
 }
 
+validateUrl() {
+  const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
+  this.invalidUrl = !urlPattern.test(this.urlFoto);
+}
+
 loadPabellon() {
   this.service.GetPabellon().subscribe(res => {
     this.pabellones = res;
   });
 }
+
 
 //Contenido del menú lateral -->
 visitante(){
