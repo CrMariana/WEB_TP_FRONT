@@ -22,6 +22,9 @@ import { AgregareventoComponent } from './component/agregarevento/agregarevento.
 import { AgregardocenteComponent } from './component/agregardocente/agregardocente.component';
 import { AgregarasignaturaComponent } from './component/agregarasignatura/agregarasignatura.component';
 import { AgregarambienteComponent } from './component/agregarambiente/agregarambiente.component';
+import { MaterialModule } from './material-module';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,11 @@ import { AgregarambienteComponent } from './component/agregarambiente/agregaramb
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
