@@ -1,1 +1,119 @@
-<p>docente works!</p>
+<div class="content">
+    <div class="side-menu">
+      <mat-toolbar color="" class="mat-elevation-z8">
+        <button (click)="drawer.toggle()" mat-icon-button>
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>GUIA FIA</span>
+      </mat-toolbar>
+  
+      <mat-drawer-container autosize>
+        <mat-drawer #drawer opened="true" mode="side" position="start">
+          <mat-nav-list>
+            <div class="col-md-7 col-lg-10 col-xl-5">
+              <div class="container">
+                <div class="text-left">
+                  <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
+                    style="width: 200px; height: 200px;" alt="logo">
+                </div>
+              </div>
+            </div>
+            <!-- Contenido del menú lateral -->
+            <mat-list-item>
+              <button  (click)="visitante()" mat-button> VISITANTES</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="asignatura()" mat-button>ASIGNATURA</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="docente()" mat-button> DOCENTES</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="graduado()" mat-button> GRADUADOS</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="evento()" mat-button> EVENTO</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="placa()" mat-button> PLACA</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="horario()" mat-button> HORARIO</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button (click)="directorio()" mat-button> DIRECTORIO</button>
+            </mat-list-item>
+  
+            <mat-list-item>
+              <button routerLink="" mat-button>
+                <mat-icon>exit_to_app</mat-icon>
+                CERRAR SESIÓN
+              </button>
+            </mat-list-item>
+  
+  
+  
+          </mat-nav-list>
+        </mat-drawer>
+        <mat-drawer-content>
+          <div style="text-align: center; min-height: 760px;">
+            <router-outlet></router-outlet>
+          </div>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+  
+    <div class="main-content">
+      <mat-card>
+        <div style="text-align: left; margin: 20px;">
+          <h1 style="font-weight: bold;">LISTADO DE DOCENTES</h1>
+        </div>
+        <mat-card-header>
+          <mat-form-field>
+            <input matInput (keyup)="Filterchange($event)" placeholder="Enter the text" />
+          </mat-form-field>
+          <button style="margin-left: 60%;" (click)="adddocente()" mat-raised-button color="warn">AGREGAR</button>
+        </mat-card-header>
+        <mat-card-content>
+          <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <!-- Columnas de la tabla -->
+            <ng-container matColumnDef="Doce_Codigo">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
+              <td mat-cell *matCellDef="let element">{{element.Doce_Codigo}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="Doce_Nombres">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef> NOMBRE Y APELLIDOS</th>
+              <td mat-cell *matCellDef="let element">{{element.Doce_Nombres}}</td>
+            </ng-container>
+  
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> EDITAR</th>
+              <td mat-cell *matCellDef="let element">
+                <button (click)="(element.id)" mat-raised-button color="primary">Edit</button>
+                <button mat-raised-button color="warn">Delete</button>
+                <button (click)="(element.id)" mat-raised-button color="primary">Detail</button>
+              </td>
+            </ng-container>
+  
+            <!-- Agrega más columnas aquí si es necesario -->
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+          </table>
+        </mat-card-content>
+        <br>
+        <mat-card-footer>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-card-footer>
+      </mat-card>
+    </div>
+  </div>
+  
