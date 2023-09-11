@@ -25,24 +25,15 @@ export class AgregarambienteComponent {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.service.buscarAmbiente(id).subscribe(ambiente => {
-          this.ambiente = ambiente;
-
-          this.service.GetArea().subscribe(res => {
-            this.areas = res;
-          });
-
-          this.service.GetPabellon().subscribe(res => {
-            this.pabellones = res;
-          });
-
-        });
-      }
+    // Llama a los métodos GetArea y GetPabellon para cargar los datos en las listas correspondientes
+    this.service.GetArea().subscribe(res => {
+      this.areas = res;
     });
-}
+
+    this.service.GetPabellon().subscribe(res => {
+      this.pabellones = res;
+    });
+  }
 
 loadArea() {
   this.service.GetArea().subscribe(res => {

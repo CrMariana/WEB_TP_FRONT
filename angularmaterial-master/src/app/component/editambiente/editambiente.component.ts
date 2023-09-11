@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ambiente } from 'src/app/model/Ambiente';
 import { Area } from 'src/app/model/Area';
@@ -39,6 +39,7 @@ export class EditambienteComponent {
           this.service.GetPabellon().subscribe(res => {
             this.pabellones = res;
           });
+          
 
         });
       }

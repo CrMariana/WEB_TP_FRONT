@@ -19,6 +19,7 @@ export class MasterService  {
   GetAmbiente(){
     return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente+"listarAmbiente");
   }
+  
 
   GetArea(){
     return this.http.get<Area[]>(this.rutaGlobalArea+"listarArea");
