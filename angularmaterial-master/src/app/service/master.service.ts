@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Ambiente } from '../Model/Ambiente';
-import { Area } from '../Model/Area';
-import { Pabellon } from '../Model/Pabellon';
+import { Ambiente } from '../model/Ambiente';
+import { Area } from '../model/Area';
+import { Pabellon } from '../model/Pabellon';
 
 @Injectable({
   providedIn: 'root'
