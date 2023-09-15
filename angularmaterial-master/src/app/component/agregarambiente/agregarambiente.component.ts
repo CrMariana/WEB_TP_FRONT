@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ambiente } from 'src/app/model/Ambiente';
 import { Area } from 'src/app/model/Area';
@@ -33,8 +34,15 @@ export class AgregarambienteComponent {
     this.service.GetPabellon().subscribe(res => {
       this.pabellones = res;
     });
+
+    this.ambiente= new Ambiente ();
   }
 
+  guardarAmbiente() {
+    this.service.crearAmbiente(this.ambiente).subscribe();
+    console.log(this.ambiente)
+  }
+  
 loadArea() {
   this.service.GetArea().subscribe(res => {
     this.areas = res;
@@ -55,6 +63,7 @@ validateUrl() {
   const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
   this.invalidUrl = !urlPattern.test(this.urlFoto);
 }
+
 
 //Contenido del menú lateral -->
 visitante(){

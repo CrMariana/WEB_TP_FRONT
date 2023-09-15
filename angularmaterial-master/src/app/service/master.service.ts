@@ -1,63 +1,72 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Ambiente } from '../model/Ambiente';
 import { Area } from '../model/Area';
 import { Pabellon } from '../model/Pabellon';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MasterService  {
+export class MasterService {
 
-  rutaGlobalAmbiente = 'http://localhost:8082/'
-  rutaGlobalArea = 'http://localhost:8080/'
-  rutaGlobalPabellon = 'http://localhost:8084/'
-  
+  rutaGlobalAmbiente = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/ambiente/'
+  rutaGlobalArea = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/area/'
+  rutaGlobalPabellon = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/pabellon/'
+
   constructor(private http: HttpClient) { }
 
 
-  GetAmbiente(){
-    return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente+"listarAmbiente");
+  GetAmbiente() {
+    return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente + "listar");
+  }
+
+  GetArea() {
+    return this.http.get<Area[]>(this.rutaGlobalArea + "listar");
+  }
+
+  GetPabellon() {
+    return this.http.get<Pabellon[]>(this.rutaGlobalPabellon + "listar");
+  }
+
+  BuscarAmbiente(id: string) {
+    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "buscarAmbiente", id);
+  }
+
+  actualizarAmbiente(ambiente: Ambiente) {
+    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "actualizarAmbiente", ambiente);
+  }
+
+  crearAmbiente(ambiente: Ambiente) {
+    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "crear", ambiente);
   }
   
-
-  GetArea(){
-    return this.http.get<Area[]>(this.rutaGlobalArea+"listarArea");
-  }
-
-  GetPabellon(){
-    return this.http.get<Pabellon[]>(this.rutaGlobalPabellon+"listarPabellon");
-  }
-
-  buscarAmbiente(id: string) {
-    return this.http.post<Ambiente>(this.rutaGlobalAmbiente+"buscarAmbiente",id);
-  }
-
-  GetPlaca(){
+// Otros métodos
+  GetPlaca() {
     return this.http.get<[]>("");
   }
 
-  GetVisitante(){
+  GetVisitante() {
     return this.http.get<[]>("");
   }
 
-  GetGraduado(){
+  GetGraduado() {
     return this.http.get<[]>("");
   }
 
-  GetDocente(){
+  GetDocente() {
     return this.http.get<[]>("");
   }
 
-  GetEvento(){
+  GetEvento() {
     return this.http.get<[]>("");
   }
 
-  GetHorario(){
+  GetHorario() {
     return this.http.get<[]>("");
   }
-  
-  GetAsignatura(){
+
+  GetAsignatura() {
     return this.http.get<[]>("");
   }
 }

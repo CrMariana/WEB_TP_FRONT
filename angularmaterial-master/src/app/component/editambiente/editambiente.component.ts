@@ -29,7 +29,7 @@ export class EditambienteComponent {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
-        this.service.buscarAmbiente(id).subscribe(ambiente => {
+        this.service.BuscarAmbiente(id).subscribe(ambiente => {
           this.ambiente = ambiente;
 
           this.service.GetArea().subscribe(res => {
@@ -44,6 +44,20 @@ export class EditambienteComponent {
         });
       }
     });
+}
+
+actualizarAmbiente() {
+  this.service.actualizarAmbiente(this.ambiente).subscribe(
+    (response) => {
+      // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito.
+      console.log('Ambiente actualizado con éxito', response);
+      this.router.navigate(['/directorio']);
+    },
+    (error) => {
+      // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario.
+      console.error('Error al actualizar el ambiente', error);
+    }
+  );
 }
 
 loadArea() {

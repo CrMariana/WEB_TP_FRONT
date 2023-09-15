@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -14,15 +15,28 @@ import { MasterService } from 'src/app/service/master.service';
 })
 
 export class DirectorioComponent {
+  formularioAmbiente: FormGroup;
   customerlist: Ambiente[] = [];
   dataSource!: MatTableDataSource<Ambiente>;
-  displayedColumns: string[] = ["Ambi_Codigo", "Ambi_Descripcion", "areas", "edificio", "Ambi_Piso","action"];
+  displayedColumns: string[] = ["Ambi_Codigo", "Ambi_Descripcion", "areas", "edificio", "Ambi_Piso", "action"];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private service: MasterService, private dialog: MatDialog, private router: Router) {
+  constructor(private service: MasterService, private dialog: MatDialog, private router: Router, private fb: FormBuilder) {
     this.loadcustomer();
+    this.formularioAmbiente = new FormGroup({
+      id: new FormControl('', [Validators.required]),
+      descripcion: new FormControl(''),
+      foto: new FormControl(''),
+      contacto: new FormControl(''),
+      horario: new FormControl(''),
+      piso: new FormControl(''),
+      referencia: new FormControl(''),
+      area: new FormControl(''),
+      pabellon: new FormControl(''),
+    });
   }
+
 
   loadcustomer() {
     this.service.GetAmbiente().subscribe(res => {
@@ -38,43 +52,43 @@ export class DirectorioComponent {
     this.dataSource.filter = value;
   }
 
-  addAmbiente(){
+  addAmbiente() {
     this.router.navigate(['/agregarambiente'])
   }
 
-  editAmbiente(id:string){
+  editAmbiente(id: string) {
     this.router.navigate(['/editambiente', id]);
   }
 
   //Contenido del menú lateral -->
-visitante(){
-  this.router.navigate(['/visitante']);
-}
-asignatura(){
-  this.router.navigate(['/asignatura']);
-}
+  visitante() {
+    this.router.navigate(['/visitante']);
+  }
+  asignatura() {
+    this.router.navigate(['/asignatura']);
+  }
 
-docente(){
-  this.router.navigate(['/docente']);
-}
+  docente() {
+    this.router.navigate(['/docente']);
+  }
 
-graduado(){
-  this.router.navigate(['/graduado']);
-}
+  graduado() {
+    this.router.navigate(['/graduado']);
+  }
 
-evento(){
-  this.router.navigate(['/evento']);
-}
+  evento() {
+    this.router.navigate(['/evento']);
+  }
 
-placa(){
-  this.router.navigate(['/placa']);
-}
+  placa() {
+    this.router.navigate(['/placa']);
+  }
 
-horario(){
-  this.router.navigate(['/horario']);
-}
+  horario() {
+    this.router.navigate(['/horario']);
+  }
 
-directorio(){
-  this.router.navigate(['/directorio']);
-}
+  directorio() {
+    this.router.navigate(['/directorio']);
+  }
 }

@@ -46,7 +46,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AgregareventoComponent,
     AgregardocenteComponent,
     AgregarasignaturaComponent,
-    AgregarambienteComponent
+    AgregarambienteComponent,
   ],
   imports: [
     BrowserModule,
