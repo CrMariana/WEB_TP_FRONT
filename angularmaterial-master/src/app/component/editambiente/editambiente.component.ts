@@ -39,7 +39,7 @@ export class EditambienteComponent {
           this.service.GetPabellon().subscribe(res => {
             this.pabellones = res;
           });
-          
+          this.ambiente = new Ambiente();
 
         });
       }
