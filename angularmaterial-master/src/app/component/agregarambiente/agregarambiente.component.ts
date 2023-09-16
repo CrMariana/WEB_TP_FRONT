@@ -83,6 +83,23 @@ export class AgregarambienteComponent {
     });
   }
 
+  //validación de ingreso de dato ID
+  validateCodigoFormat(event: any) {
+    const codigo = event.target.value;
+
+    // Expresión regular para verificar el formato (2 letras mayúsculas seguidas de 2 números)
+    const codigoRegex = /^[A-Z]{2}\d{2}$/;
+
+    if (codigo === '') {
+      this.mostrarAlertaCodigo = false; // Si el campo está vacío, ocultar la alerta
+    } else if (!codigoRegex.test(codigo)) {
+      this.mostrarAlertaCodigo = true; // Si no cumple el formato, mostrar la alerta
+    } else {
+      this.mostrarAlertaCodigo = false; // Si cumple el formato, ocultar la alerta
+    }
+  }
+
+
   loadArea() {
     this.service.GetArea().subscribe(res => {
       this.areas = res;
@@ -98,11 +115,22 @@ export class AgregarambienteComponent {
   onCodigoChange(value: string) {
     this.id = value; // Actualizamos el valor de codigo con el nuevo valor ingresado
   }
-
+  // VALIDACIÓN URL
   validateUrl() {
-    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-    this.invalidUrl = !urlPattern.test(this.urlFoto);
+    if (this.ambiente.foto !== undefined) {
+      const urlPattern = /^(http:\/\/|https:\/\/)/i;
+      this.mostrarAlertaFoto = !urlPattern.test(this.ambiente.foto);
+    } else {
+      this.mostrarAlertaFoto = false; // No mostrar alerta si el campo está vacío o undefined
+    }
   }
+
+  // VALIDACION CONTACTO
+  validateContacto() {
+    const contactoPattern = /^[a-z0-9._%+-]+@usmp\.pe$/;
+    this.mostrarAlertaContacto = !contactoPattern.test(this.ambiente.contacto || '');
+  }
+  
 
 
   //Contenido del menú lateral -->

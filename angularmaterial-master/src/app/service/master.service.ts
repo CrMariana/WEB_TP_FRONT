@@ -30,11 +30,11 @@ export class MasterService {
   }
 
   BuscarAmbiente(id: string) {
-    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "buscarAmbiente", id);
+    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "buscar", id);
   }
 
   actualizarAmbiente(ambiente: Ambiente) {
-    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "actualizarAmbiente", ambiente);
+    return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "actualizar", ambiente);
   }
 
   crearAmbiente(ambiente: Ambiente) {
