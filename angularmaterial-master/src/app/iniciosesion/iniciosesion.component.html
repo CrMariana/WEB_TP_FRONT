@@ -2,29 +2,43 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <body>
-<section class="side">
-  <img src="https://lh3.googleusercontent.com/p/AF1QipNbcjQbsn2ucOh0Q8BGosn8FU30d6WttiAvjE36=s1360-w1360-h1020" alt="">
-</section>
+  <section class="side">
+    <img src="https://lh3.googleusercontent.com/p/AF1QipNbcjQbsn2ucOh0Q8BGosn8FU30d6WttiAvjE36=s1360-w1360-h1020"
+      alt="">
+  </section>
 
-<section class="main">
-  <div class="login-container">
-    <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
-            style="width: 400px; height: auto;"  alt="logo">
+  <section class="main">
+    <div class="login-container">
+      <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
+        style="width: 400px; height: auto;" alt="logo">
       <p class="title">Bienvenido</p>
       <div class="separator"></div>
 
       <form class="login-form">
-          <div class="form-control">
-              <input type="text" placeholder="USUARIO" [(ngModel)]="administrador.username" name="usuario">
-              <i class="fas fa-user"></i>
-          </div>
-          <div class="form-control">
-              <input type="password" placeholder="CONTRASEÑA" [(ngModel)]="administrador.password" name="password">
-              <i class="fas fa-lock"></i>
-          </div>
+        <div class="form-control">
+          <input type="text" placeholder="USUARIO" [(ngModel)]="administrador.username" name="usuario">
+          <i class="fas fa-user"></i>
+        </div>
 
-          <button (click)="iniciosesion()" class="submit" >Iniciar Sesión</button>
+        <div class="form-control">
+          <input type="password" placeholder="CONTRASEÑA" [(ngModel)]="administrador.password" name="password">
+          <i class="fas fa-lock"></i>
+        </div>
+
+        <!-- Alerta para campos vacíos -->
+        <p class="text-danger" *ngIf="mostrarErrorCamposVacios">
+          Los campos de usuario y contraseña no pueden estar vacíos. Por favor, completa ambos campos.
+        </p>
+
+        <!-- Alerta para usuario o contraseña incorrecta -->
+        <p class="text-danger" *ngIf="mostrarErrorUsuarioContrasenaIncorrecta">
+          Usuario o contraseña incorrecta. Por favor, intenta de nuevo.
+        </p>
+
+
+        <button (click)="iniciosesion()" class="submit">Iniciar Sesión</button>
       </form>
-  </div>
-</section>
+
+    </div>
+  </section>
 </body>

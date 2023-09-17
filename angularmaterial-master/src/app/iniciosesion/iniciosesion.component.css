@@ -29,7 +29,13 @@ section.side {
     max-width: 200%;
     height: 100%;
 }
-
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+    display: none; /* Inicialmente oculto */
+  }
+  
 .login-container {
     max-width: 450px;
     padding: 24px;
