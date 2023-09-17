@@ -1,169 +1,203 @@
 <div class="content">
-    <div class="side-menu">
-      <mat-toolbar color="" class="mat-elevation-z8">
-        <button (click)="drawer.toggle()" mat-icon-button>
-          <mat-icon>menu</mat-icon>
-        </button>
-        <span>GUIA FIA</span>
-      </mat-toolbar>
-  
-      <mat-drawer-container autosize>
-        <mat-drawer #drawer opened="true" mode="side" position="start">
-          <mat-nav-list>
-            <div class="col-md-7 col-lg-10 col-xl-5">
-              <div class="container">
-                <div class="text-left">
-                  <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
-                    style="width: 200px; height: 200px;" alt="logo">
-                </div>
-              </div>
-            </div>
-            <!-- Contenido del menú lateral -->
-            <mat-list-item>
-              <button  (click)="visitante()" mat-button> VISITANTES</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="asignatura()" mat-button>ASIGNATURA</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="docente()" mat-button> DOCENTES</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="graduado()" mat-button> GRADUADOS</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="evento()" mat-button> EVENTO</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="placa()" mat-button> PLACA</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="horario()" mat-button> HORARIO</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button (click)="directorio()" mat-button> DIRECTORIO</button>
-            </mat-list-item>
-  
-            <mat-list-item>
-              <button routerLink="" mat-button>
-                <mat-icon>exit_to_app</mat-icon>
-                CERRAR SESIÓN
-              </button>
-            </mat-list-item>
-  
-  
-  
-          </mat-nav-list>
-        </mat-drawer>
-        <mat-drawer-content>
-          <div style="text-align: center; min-height: 760px;">
-            <router-outlet></router-outlet>
-          </div>
-        </mat-drawer-content>
-      </mat-drawer-container>
-    </div>
-  
-    <div class="main-content">
-      <mat-card>
-        <div style="text-align: left; margin: 20px;">
-          <h1 style="font-weight: bold;">EDITAR DE AMBIENTES</h1>
-        </div>
-  
-        <mat-card-content>
-          <div class="form-group row">
-            <label for="inputPassword" class="col-sm-2 col-form-label">CÓDIGO</label>
-            <div class="col-sm-8">
-              <input name="codigo" type="text" class="form-control" [value]="ambiente.id" placeholder="" maxlength="4">
-            </div>
-          </div>
-          
-          
-  
-              <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">DESCRIPCIÓN</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" [value]="ambiente.descripcion" placeholder="">
-                </div>
-              </div>
-  
-              <div class="form-group row">
-                <label for="pabellonSelect" class="col-sm-2 col-form-label">ÁREA</label>
-                <div class="col-sm-8">
-                  <select class="form-control" id="pabellonSelect" [(ngModel)]="ambiente.area">
-                    <option *ngFor="let area of areas" [ngValue]="area.id">{{ area.descripcion }}</option>
-                  </select>
-                </div>
-              </div>
-  
-              <div class="form-group row">
-                <label for="pabellonSelect" class="col-sm-2 col-form-label">PABELLÓN</label>
-                <div class="col-sm-8">
-                  <select class="form-control" id="pabellonSelect" [(ngModel)]="ambiente.pabellon">
-                    <option *ngFor="let pabellon of pabellones" [ngValue]="pabellon.id">{{ pabellon.descripcion }}</option>
-                  </select>
-                </div>
-              </div>
-  
-              <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">PISO</label>
-                <div class="col-sm-8">
-                    <select class="form-control" id="areaSelect">
-                        <option value="opcion1">0</option>
-                        <option value="opcion1">1</option>
-                        <option value="opcion2">2</option>
-                        <option value="opcion3">3</option>
-                      </select>
-                </div>
-              </div>
-  
-              <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">URL FOTO</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" [value]="ambiente.foto" id="inputPassword" placeholder="" [(ngModel)]="urlFoto" (input)="validateUrl()">
-                  <div class="alert alert-danger" *ngIf="urlFoto && invalidUrl">
-                    Por favor, ingresa una URL válida.
-                  </div>
-                </div>
-              </div>
-  
-              <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">CONTACTO</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" id="inputPassword" placeholder="" [(ngModel)]="contacto" name="contacto" #contactoInput="ngModel"
-                        required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" [value]="ambiente.contacto">
-                    <div *ngIf="contactoInput.invalid && (contactoInput.dirty || contactoInput.touched) && contacto" class="alert alert-danger">
-                        Por favor, ingresa un correo electrónico válido.
-                    </div>
-                </div>
-            </div>
-  
-            <div class="form-group row">
-              <label for="inputRange" class="col-sm-2 col-form-label">HORA:</label>
-              <div class="col-sm-4">
-                  <input type="text" class="form-control" [value]="ambiente.horario" id="inputRange" placeholder="hh:mm - hh:mm">
-              </div>
-          </div>
-  
-              <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">REFERENCIA</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" [value]="ambiente.referencia" id="inputPassword" placeholder="">
-                </div>
-              </div>
+  <div class="side-menu">
+    <mat-toolbar color="" class="mat-elevation-z8">
+      <button (click)="drawer.toggle()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>GUIA FIA</span>
+    </mat-toolbar>
 
-              <button (click)="actualizarAmbiente()" style="margin-left: 60%;" mat-raised-button color="warn">GUARDAR</button>
-  
-        </mat-card-content>
-  
-    </mat-card>
-    </div>
+    <mat-drawer-container autosize>
+      <mat-drawer #drawer opened="true" mode="side" position="start">
+        <mat-nav-list>
+          <div class="col-md-7 col-lg-10 col-xl-5">
+            <div class="container">
+              <div class="text-left">
+                <img src="https://i.pinimg.com/750x/34/30/f0/3430f09d54154dae08871818dce4abb1.jpg"
+                  style="width: 200px; height: 200px;" alt="logo">
+              </div>
+            </div>
+          </div>
+          <!-- Contenido del menú lateral -->
+          <mat-list-item>
+            <button (click)="visitante()" mat-button> VISITANTES</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="asignatura()" mat-button>ASIGNATURA</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="docente()" mat-button> DOCENTES</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="graduado()" mat-button> GRADUADOS</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="evento()" mat-button> EVENTO</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="placa()" mat-button> PLACA</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="horario()" mat-button> HORARIO</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button (click)="directorio()" mat-button> DIRECTORIO</button>
+          </mat-list-item>
+
+          <mat-list-item>
+            <button routerLink="" mat-button>
+              <mat-icon>exit_to_app</mat-icon>
+              CERRAR SESIÓN
+            </button>
+          </mat-list-item>
+
+
+
+        </mat-nav-list>
+      </mat-drawer>
+      <mat-drawer-content>
+        <div style="text-align: center; min-height: 760px;">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-drawer-content>
+    </mat-drawer-container>
   </div>
-  
-  
+
+  <div class="main-content">
+    <mat-card>
+      <div style="text-align: left; margin: 20px;">
+        <h1 style="font-weight: bold;">EDITAR AMBIENTE</h1>
+      </div>
+
+      <mat-card-content>
+        <form>
+          <!-- Campo CÓDIGO -->
+          <div class="form-group row">
+            <label for="inputCodigo" class="col-sm-2 col-form-label">CÓDIGO</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="inputCodigo" placeholder="" [(ngModel)]="ambiente.id"
+                name="codigo" (input)="validateCodigoFormat($event)" (blur)="validateCodigoFormat($event)"
+                maxlength="4" />
+              <div class="alert alert-danger" *ngIf="mostrarAlertaCodigo">El campo Código es obligatorio y debe tener el
+                formato: dos letras mayúsculas seguidas de dos números (ejemplo: EG12).</div>
+            </div>
+          </div>
+
+          <!-- Campo DESCRIPCIÓN -->
+          <div class="form-group row">
+            <label for="inputDescripcion" class="col-sm-2 col-form-label">DESCRIPCIÓN</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" [(ngModel)]="ambiente.descripcion" placeholder="">
+              <div *ngIf="mostrarAlertaDescripcion" class="alert alert-danger">
+                Descripción es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo ÁREA -->
+          <div class="form-group row">
+            <label for="areaSelect" class="col-sm-2 col-form-label">ÁREA</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="areaSelect" [(ngModel)]="ambiente.area">
+                <option *ngFor="let area of areas" [ngValue]="area.id">{{ area.descripcion }}</option>
+              </select>
+              <div *ngIf="mostrarAlertaArea" class="alert alert-danger">
+                Debe seleccionar un Área.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo PABELLÓN -->
+          <div class="form-group row">
+            <label for="pabellonSelect" class="col-sm-2 col-form-label">PABELLÓN</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="pabellonSelect" [(ngModel)]="ambiente.pabellon">
+                <option *ngFor="let pabellon of pabellones" [ngValue]="pabellon.id">{{ pabellon.descripcion }}</option>
+              </select>
+              <div *ngIf="mostrarAlertaPabellon" class="alert alert-danger">
+                Debe seleccionar un Pabellón.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo PISO -->
+          <div class="form-group row">
+            <label for="pisoSelect" class="col-sm-2 col-form-label">PISO</label>
+            <div class="col-sm-8">
+              <select class="form-control" id="pisoSelect" [(ngModel)]="ambiente.piso">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              <div *ngIf="mostrarAlertaPiso" class="alert alert-danger">
+                Debe seleccionar un Piso.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo URL FOTO -->
+          <div class="form-group row">
+            <label for="inputFoto" class="col-sm-2 col-form-label">URL FOTO</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" [(ngModel)]="ambiente.foto" id="inputFoto" placeholder=""
+                (input)="validateUrl()">
+              <div *ngIf="mostrarAlertaFoto" class="alert alert-danger">
+                Por favor, ingresa una URL válida que comience con "http://" o "https://".
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo CONTACTO -->
+          <div class="form-group row">
+            <label for="inputContacto" class="col-sm-2 col-form-label">CONTACTO</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="inputContacto" placeholder="" [(ngModel)]="ambiente.contacto"
+                name="contacto" #contactoInput="ngModel" required
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
+              <div *ngIf="mostrarAlertaContacto" class="alert alert-danger">
+                El campo Contacto debe ser un correo de @usmp.pe válido.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo HORA -->
+          <div class="form-group row">
+            <label for="inputHorario" class="col-sm-2 col-form-label">HORA</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" [(ngModel)]="ambiente.horario" id="inputHorario" placeholder="">
+              <div *ngIf="mostrarAlertaHorario" class="alert alert-danger">
+                El campo Horario es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Campo REFERENCIA -->
+          <div class="form-group row">
+            <label for="inputReferencia" class="col-sm-2 col-form-label">REFERENCIA</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" [(ngModel)]="ambiente.referencia" id="inputReferencia"
+                placeholder="">
+              <div *ngIf="mostrarAlertaReferencia" class="alert alert-danger">
+                Referencia es obligatorio.
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón de GUARDAR -->
+          <button (click)="actualizarAmbiente()" style="margin-left: 60%;" mat-raised-button
+            color="warn">GUARDAR CAMBIOS</button>
+        </form>
+
+      </mat-card-content>
+
+    </mat-card>
+  </div>
+</div>
