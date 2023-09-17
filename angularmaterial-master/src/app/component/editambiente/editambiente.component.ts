@@ -11,12 +11,14 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./editambiente.component.css']
 })
 export class EditambienteComponent {
-  ambiente: Ambiente = new Ambiente;
+  ambiente: Ambiente = new Ambiente();
   areas: Area[] = [];
   pabellones: Pabellon[] = [];
   urlFoto: string = '';
-  invalidUrl: boolean = false;
   contacto: string = ''; 
+  id: any;
+  editing:boolean=false;
+  
   
   // Propiedades para mostrar alertas de error
   mostrarAlertaCodigo: boolean = false;
@@ -43,6 +45,16 @@ export class EditambienteComponent {
 
     this.service.GetPabellon().subscribe(res => {
       this.pabellones = res;
+    });
+
+    // Obtén el ID de ambiente de la URL y carga los datos del ambiente
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.service.BuscarAmbiente(id).subscribe(ambiente => {
+          this.ambiente = ambiente;
+        });
+      }
     });
   }
 
@@ -86,7 +98,7 @@ export class EditambienteComponent {
     );
   }
 
-  //validación de ingreso de dato ID
+  // Validación de ingreso de dato ID
   validateCodigoFormat(event: any) {
     const codigo = event.target.value;
 
