@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterService } from 'src/app/service/master.service';
 
 @Component({
   selector: 'app-agregarasignatura',
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class AgregarasignaturaComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: MasterService) {}
+
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
 
 //Contenido del menú lateral -->
 visitante(){

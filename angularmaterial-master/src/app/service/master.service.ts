@@ -3,7 +3,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { Ambiente } from '../model/Ambiente';
 import { Area } from '../model/Area';
 import { Pabellon } from '../model/Pabellon';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { Administrador } from '../model/Administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,25 @@ export class MasterService {
   rutaGlobalAmbiente = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/ambiente/'
   rutaGlobalArea = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/area/'
   rutaGlobalPabellon = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/pabellon/'
+  rutaGlobalLogin = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/login'
 
   constructor(private http: HttpClient) { }
 
+  Ingresar(administrador: Administrador){
+    return this.http.post(this.rutaGlobalLogin,administrador);
+  }
+
+  setToken(idToken: string){
+    localStorage.setItem("token",idToken);
+  }
+
+  getToken(){
+    return localStorage.getItem('token');
+  }
+
+  deleteToken(){
+    localStorage.removeItem('token');
+  }
 
   GetAmbiente() {
     return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente + "listar");
@@ -40,8 +57,8 @@ export class MasterService {
   crearAmbiente(ambiente: Ambiente) {
     return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "crear", ambiente);
   }
-  
-// Otros métodos
+
+  // Otros métodos
   GetPlaca() {
     return this.http.get<[]>("");
   }

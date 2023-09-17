@@ -23,6 +23,11 @@ export class HorarioComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   loadcustomer() {
     this.service.GetHorario().subscribe(res => {
       this.customerlist = res;

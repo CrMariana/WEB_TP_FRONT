@@ -22,6 +22,11 @@ export class DocenteComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   loadcustomer() {
     this.service.GetDocente().subscribe(res => {
       this.customerlist = res;

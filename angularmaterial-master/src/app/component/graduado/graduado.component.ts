@@ -22,6 +22,11 @@ export class GraduadoComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   loadcustomer() {
     this.service.GetGraduado().subscribe(res => {
       this.customerlist = res;

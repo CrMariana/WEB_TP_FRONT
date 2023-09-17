@@ -25,6 +25,11 @@ export class VisitanteComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   loadcustomer() {
     this.service.GetVisitante().subscribe(res => {
       this.customerlist = res;

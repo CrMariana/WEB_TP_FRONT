@@ -23,6 +23,11 @@ export class AsignaturaComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+  
   loadcustomer() {
     this.service.GetAsignatura().subscribe(res => {
       this.customerlist = res;

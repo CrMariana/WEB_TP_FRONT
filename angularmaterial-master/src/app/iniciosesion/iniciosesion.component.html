@@ -15,11 +15,11 @@
 
       <form class="login-form">
           <div class="form-control">
-              <input type="text" placeholder="USUARIO">
+              <input type="text" placeholder="USUARIO" [(ngModel)]="administrador.username" name="usuario">
               <i class="fas fa-user"></i>
           </div>
           <div class="form-control">
-              <input type="password" placeholder="CONTRASEÑA" >
+              <input type="password" placeholder="CONTRASEÑA" [(ngModel)]="administrador.password" name="password">
               <i class="fas fa-lock"></i>
           </div>
 

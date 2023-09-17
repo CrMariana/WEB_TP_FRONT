@@ -37,6 +37,11 @@ export class AgregarambienteComponent {
     private router: Router
   ) { }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   ngOnInit(): void {
     // Llama a los métodos GetArea y GetPabellon para cargar los datos en las listas correspondientes
     this.service.GetArea().subscribe(res => {
@@ -81,6 +86,8 @@ export class AgregarambienteComponent {
       // Lógica adicional después de guardar, si es necesario
       console.log(this.ambiente);
     });
+
+    this.router.navigate(['/directorio']);
   }
 
   //validación de ingreso de dato ID

@@ -23,6 +23,11 @@ export class PlacaComponent {
     this.loadcustomer();
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
   loadcustomer(): void {
     this.service.GetPlaca().subscribe(res => {
       this.customerlist = res;

@@ -23,8 +23,9 @@ import { AgregardocenteComponent } from './component/agregardocente/agregardocen
 import { AgregarasignaturaComponent } from './component/agregarasignatura/agregarasignatura.component';
 import { AgregarambienteComponent } from './component/agregarambiente/agregarambiente.component';
 import { MaterialModule } from './material-module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthInterceptor } from './helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,useClass: AuthInterceptor,multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

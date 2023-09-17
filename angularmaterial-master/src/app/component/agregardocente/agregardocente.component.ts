@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterService } from 'src/app/service/master.service';
 
 @Component({
   selector: 'app-agregardocente',
@@ -12,7 +13,12 @@ export class AgregardocenteComponent {
   inputNombre: boolean = false;
   inputApellidoP: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: MasterService) {}
+
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
 
   validateNombre() {
     // Verificar si el valor no está vacío y contiene números

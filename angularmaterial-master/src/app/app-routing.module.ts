@@ -17,30 +17,31 @@ import { DocenteComponent } from './component/docente/docente.component';
 import { EventoComponent } from './component/evento/evento.component';
 import { VisitanteComponent } from './component/visitante/visitante.component';
 import { AsignaturaComponent } from './component/asignatura/asignatura.component';
+import { authGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
 
-  {path:'evento',component:EventoComponent},
-  {path:'docente',component:DocenteComponent},
-  {path:'graduado',component:GraduadoComponent},
-  {path:'directorio',component:DirectorioComponent},
-  {path:'agregarasignatura',component:AgregarasignaturaComponent},
-  {path:'agregardocente',component:AgregardocenteComponent},
-  {path:'placa',component:PlacaComponent},
-  {path:'horario',component:HorarioComponent},
-  {path: 'agregarambiente/:id', component: AgregarambienteComponent },
-  {path: 'editambiente/:id', component: EditambienteComponent },
-  {path:'editambiente',component:EditambienteComponent},
-  {path:'agregarambiente',component:AgregarambienteComponent},
-  {path:'agregarevento',component:AgregareventoComponent},
-  {path:'agregargraduado',component:AgregargraduadoComponent},
-  {path:'agregarhorario',component:AgregarhorarioComponent},
-  {path: 'agregarplaca',component:AgregarplacaComponent},
+  {path:'evento',component:EventoComponent,canActivate:[authGuard]},
+  {path:'docente',component:DocenteComponent,canActivate:[authGuard]},
+  {path:'graduado',component:GraduadoComponent,canActivate:[authGuard]},
+  {path:'directorio',component:DirectorioComponent,canActivate:[authGuard]},
+  {path:'agregarasignatura',component:AgregarasignaturaComponent,canActivate:[authGuard]},
+  {path:'agregardocente',component:AgregardocenteComponent,canActivate:[authGuard]},
+  {path:'placa',component:PlacaComponent,canActivate:[authGuard]},
+  {path:'horario',component:HorarioComponent,canActivate:[authGuard]},
+  {path: 'agregarambiente/:id', component: AgregarambienteComponent,canActivate:[authGuard] },
+  {path: 'editambiente/:id', component: EditambienteComponent,canActivate:[authGuard] },
+  {path:'editambiente',component:EditambienteComponent,canActivate:[authGuard]},
+  {path:'agregarambiente',component:AgregarambienteComponent,canActivate:[authGuard]},
+  {path:'agregarevento',component:AgregareventoComponent,canActivate:[authGuard]},
+  {path:'agregargraduado',component:AgregargraduadoComponent,canActivate:[authGuard]},
+  {path:'agregarhorario',component:AgregarhorarioComponent,canActivate:[authGuard]},
+  {path: 'agregarplaca',component:AgregarplacaComponent,canActivate:[authGuard]},
   {path: '',component:IniciosesionComponent},
-  {path: 'iniciosesion',component:IniciosesionComponent},
-  {path:'visitante',component:VisitanteComponent},
-  {path:'asignatura',component:AsignaturaComponent},
-  {path:'graduado',component:GraduadoComponent},
+  {path: 'iniciosesion',component:IniciosesionComponent,canActivate:[authGuard]},
+  {path:'visitante',component:VisitanteComponent,canActivate:[authGuard]},
+  {path:'asignatura',component:AsignaturaComponent,canActivate:[authGuard]},
+  {path:'graduado',component:GraduadoComponent,canActivate:[authGuard]},
 ];
 
 @NgModule({

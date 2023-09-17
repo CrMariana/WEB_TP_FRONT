@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterService } from 'src/app/service/master.service';
 
 @Component({
   selector: 'app-agregarplaca',
@@ -10,11 +11,16 @@ export class AgregarplacaComponent {
   urlFoto: string = '';
   invalidUrl: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: MasterService) {}
 
   validateUrl() {
     const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
     this.invalidUrl = !urlPattern.test(this.urlFoto);
+  }
+
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
   }
 
   //Contenido del menú lateral -->

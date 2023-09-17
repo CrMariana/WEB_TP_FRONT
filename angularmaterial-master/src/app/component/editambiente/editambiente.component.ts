@@ -137,6 +137,11 @@ loadPabellon() {
   });
 }
 
+cerrarSesion(){
+  this.service.deleteToken();
+  this.router.navigate(['']);
+}
+
 
 //Contenido del menú lateral -->
 visitante(){

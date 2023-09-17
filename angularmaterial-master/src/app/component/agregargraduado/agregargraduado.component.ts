@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MasterService } from 'src/app/service/master.service';
 
 @Component({
   selector: 'app-agregargraduado',
@@ -16,9 +17,13 @@ export class AgregargraduadoComponent {
   inputNombre: boolean = false;
   inputApellidoP: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private service: MasterService) {}
 
-
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+  
   validateUrl() {
     // Expresión regular para verificar si es una URL de LinkedIn válida
     const linkedinUrlPattern = /^(https:\/\/)?(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+$/;

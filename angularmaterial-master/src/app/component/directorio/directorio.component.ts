@@ -37,6 +37,11 @@ export class DirectorioComponent {
     });
   }
 
+  cerrarSesion(){
+    this.service.deleteToken();
+    this.router.navigate(['']);
+  }
+
 
   loadcustomer() {
     this.service.GetAmbiente().subscribe(res => {
