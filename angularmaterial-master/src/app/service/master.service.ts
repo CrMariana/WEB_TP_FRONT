@@ -46,7 +46,7 @@ export class MasterService {
     return this.http.get<Pabellon[]>(this.rutaGlobalPabellon + "listar");
   }
 
-  BuscarAmbiente(id: string) {
+  BuscarAmbiente(id:any) {
     return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "buscar", id);
   }
 

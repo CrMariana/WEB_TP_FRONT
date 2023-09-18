@@ -74,7 +74,7 @@
       </div>
 
       <mat-card-content>
-        <form>
+        <form  (ngSubmit)="validarYGuardarAmbiente()" #ambienteForm="ngForm">
           <div class="form-group row">
             <label for="inputCodigo" class="col-sm-2 col-form-label">CÓDIGO</label>
             <div class="col-sm-8">
@@ -174,10 +174,8 @@
             </div>
           </div>
 
-          <!-- Otros campos -->
+          <button type="submit" (click)="guardarAmbiente()" style="margin-left: 60%;" mat-raised-button color="warn" [disabled]="camposEnBlanco">GUARDAR</button>
 
-          <button type="submit" (click)="guardarAmbiente()" style="margin-left: 60%;" mat-raised-button
-            color="warn">GUARDAR</button>
         </form>
 
 

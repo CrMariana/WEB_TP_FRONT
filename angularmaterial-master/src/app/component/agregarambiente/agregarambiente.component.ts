@@ -30,6 +30,8 @@ export class AgregarambienteComponent {
   mostrarAlertaContacto: boolean = false;
   mostrarAlertaHorario: boolean = false;
   mostrarAlertaReferencia: boolean = false;
+  mostrarModalError: boolean = false;
+  camposEnBlanco: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +39,7 @@ export class AgregarambienteComponent {
     private router: Router
   ) { }
 
-  cerrarSesion(){
+  cerrarSesion() {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
@@ -78,21 +80,26 @@ export class AgregarambienteComponent {
       this.mostrarAlertaContacto = !this.ambiente.contacto;
       this.mostrarAlertaHorario = !this.ambiente.horario;
       this.mostrarAlertaReferencia = !this.ambiente.referencia;
+  
+      // Establecer que los campos están en blanco
+      this.camposEnBlanco = true;
       return;
     }
-
+  
     // Si todos los campos están completos y válidos, procede a guardar los datos
     this.service.crearAmbiente(this.ambiente).subscribe(() => {
       // Lógica adicional después de guardar, si es necesario
       console.log(this.ambiente);
     });
-
+  
     this.router.navigate(['/directorio']);
   }
+  
+  
 
   //validación de ingreso de dato ID
   validateCodigoFormat(event: any) {
-    const codigo = event.target.value;
+    const codigo = event.target.value.trim(); // Eliminar espacios en blanco al inicio y al final
 
     // Expresión regular para verificar el formato (2 letras mayúsculas seguidas de 2 números)
     const codigoRegex = /^[A-Z]{2}\d{2}$/;
@@ -104,6 +111,29 @@ export class AgregarambienteComponent {
     } else {
       this.mostrarAlertaCodigo = false; // Si cumple el formato, ocultar la alerta
     }
+  }
+
+  validarYGuardarAmbiente() {
+    // Validar si todos los campos están en blanco o contienen solo espacios en blanco
+    if (this.areAllFieldsBlank()) {
+      // Mostrar una alerta o realizar alguna acción para indicar que los campos están vacíos
+      alert('Por favor, completa los campos antes de guardar.');
+    } else {
+      // Si los campos no están vacíos, llamar a la función guardarAmbiente()
+      this.guardarAmbiente();
+    }
+  }
+
+  // Función para verificar si todos los campos están en blanco o contienen solo espacios en blanco
+  areAllFieldsBlank(): boolean {
+    const campos = [
+      this.ambiente.id,
+      this.ambiente.descripcion,
+      // Agrega otros campos aquí
+    ];
+
+    // Verifica si todos los campos están en blanco o contienen solo espacios en blanco
+    return campos.every(campo => !campo || campo.trim() === '');
   }
 
 
@@ -137,7 +167,7 @@ export class AgregarambienteComponent {
     const contactoPattern = /^[a-z0-9._%+-]+@usmp\.pe$/;
     this.mostrarAlertaContacto = !contactoPattern.test(this.ambiente.contacto || '');
   }
-  
+
 
 
   //Contenido del menú lateral -->

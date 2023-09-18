@@ -11,15 +11,17 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./editambiente.component.css']
 })
 export class EditambienteComponent {
-  ambiente: Ambiente = new Ambiente();
-  areas: Area[] = [];
-  pabellones: Pabellon[] = [];
+  ambiente: Ambiente = new Ambiente;
+  areaJ: Area=new Area;
+  pabellonJ: Pabellon=new Pabellon;
+  areas: Area[]=[];
+  pabellones: Pabellon[]=[];
   urlFoto: string = '';
-  contacto: string = ''; 
-  id: any;
+  contacto: string = '';
+  id?: string;
   editing:boolean=false;
-  
-  
+
+
   // Propiedades para mostrar alertas de error
   mostrarAlertaCodigo: boolean = false;
   mostrarAlertaDescripcion: boolean = false;
@@ -30,7 +32,7 @@ export class EditambienteComponent {
   mostrarAlertaContacto: boolean = false;
   mostrarAlertaHorario: boolean = false;
   mostrarAlertaReferencia: boolean = false;
-  
+
   constructor(
     private route: ActivatedRoute,
     private service: MasterService,
@@ -48,13 +50,20 @@ export class EditambienteComponent {
     });
 
     // Obtén el ID de ambiente de la URL y carga los datos del ambiente
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.service.BuscarAmbiente(id).subscribe(ambiente => {
-          this.ambiente = ambiente;
-        });
-      }
+    this.route.paramMap.subscribe((params: any) => {
+      const parametro = {
+        id: params.get("id")
+      };
+      this.service.BuscarAmbiente(parametro).subscribe(
+        res =>{
+          this.ambiente=res;
+          if (this.ambiente && this.ambiente.area && this.ambiente.pabellon) {
+            this.areaJ = this.ambiente.area;
+            this.pabellonJ=this.ambiente.pabellon;
+          }
+        }
+      )
+      console.log(parametro);
     });
   }
 
