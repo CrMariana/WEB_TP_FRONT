@@ -77,7 +77,7 @@
           <div class="form-group row">
             <label for="inputCodigo" class="col-sm-2 col-form-label">CÓDIGO</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="inputCodigo" placeholder="" [(ngModel)]="ambiente.id"
+              <input type="text" [readonly]="soloLectura" class="form-control" id="inputCodigo" placeholder="" [(ngModel)]="ambiente.id"
                 name="codigo" (input)="validateCodigoFormat($event)" (blur)="validateCodigoFormat($event)"
                 maxlength="4" />
               <div class="alert alert-danger" *ngIf="mostrarAlertaCodigo">El campo Código es obligatorio y debe tener el
@@ -156,7 +156,7 @@
             <div class="col-sm-8">
               <input type="text" class="form-control" id="inputContacto" placeholder="" [(ngModel)]="ambiente.contacto"
                 name="contacto" #contactoInput="ngModel" required
-                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
+                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}" (input)="validateContacto()">
               <div *ngIf="mostrarAlertaContacto" class="alert alert-danger">
                 El campo Contacto debe ser un correo de @usmp.pe válido.
               </div>

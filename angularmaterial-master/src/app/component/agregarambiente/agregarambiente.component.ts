@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Ambiente } from 'src/app/model/Ambiente';
 import { Area } from 'src/app/model/Area';
@@ -22,6 +20,7 @@ export class AgregarambienteComponent {
   invalidUrl: boolean = false;
 
   mostrarAlertaCodigo: boolean = false;
+  mostrarAlertaCodigoExistencia: boolean = false;
   mostrarAlertaDescripcion: boolean = false;
   mostrarAlertaArea: boolean = false;
   mostrarAlertaPabellon: boolean = false;
@@ -30,8 +29,6 @@ export class AgregarambienteComponent {
   mostrarAlertaContacto: boolean = false;
   mostrarAlertaHorario: boolean = false;
   mostrarAlertaReferencia: boolean = false;
-  mostrarModalError: boolean = false;
-  camposEnBlanco: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +36,7 @@ export class AgregarambienteComponent {
     private router: Router
   ) { }
 
-  cerrarSesion() {
+  cerrarSesion(){
     this.service.deleteToken();
     this.router.navigate(['']);
   }
@@ -58,48 +55,58 @@ export class AgregarambienteComponent {
   }
 
   guardarAmbiente() {
-    // Validar si alguno de los campos está vacío o inválido
-    if (
-      !this.ambiente.id ||
-      !this.ambiente.descripcion ||
-      !this.ambiente.area ||
-      !this.ambiente.pabellon ||
-      !this.ambiente.piso ||
-      !this.ambiente.foto ||
-      !this.ambiente.contacto ||
-      !this.ambiente.horario ||
-      !this.ambiente.referencia
-    ) {
+
+
+    const codigoRegex = /^[A-Z]{2}\d{2}$/;
+
+    const urlPattern = /^(http:\/\/|https:\/\/)/i;
+
+    const contactoPattern = /^[a-z0-9._%+-]+@usmp\.pe$/;
+
+
+
+    if (!this.ambiente.id?.trim()|| !codigoRegex.test(this.ambiente.id?.trim()) || !this.ambiente.descripcion?.trim() || !this.ambiente.area || !this.ambiente.pabellon || !this.ambiente.piso?.trim() || !this.ambiente.foto?.trim() || !urlPattern.test(this.ambiente.foto) || !this.ambiente.contacto?.trim() || !contactoPattern.test(this.ambiente.contacto?.trim()) || !this.ambiente.horario?.trim() || !this.ambiente.referencia?.trim()){
       // Mostrar alertas para campos vacíos
-      this.mostrarAlertaCodigo = !this.ambiente.id;
-      this.mostrarAlertaDescripcion = !this.ambiente.descripcion;
+
+      this.mostrarAlertaCodigo = !this.ambiente.id?.trim();
+      if(this.ambiente.id){
+        this.mostrarAlertaCodigo = !codigoRegex.test(this.ambiente.id?.trim());
+      }
+      this.mostrarAlertaDescripcion = !this.ambiente.descripcion?.trim();
       this.mostrarAlertaPabellon = !this.ambiente.pabellon;
       this.mostrarAlertaArea = !this.ambiente.area;
-      this.mostrarAlertaPiso = !this.ambiente.piso;
-      this.mostrarAlertaFoto = !this.ambiente.foto;
-      this.mostrarAlertaContacto = !this.ambiente.contacto;
-      this.mostrarAlertaHorario = !this.ambiente.horario;
-      this.mostrarAlertaReferencia = !this.ambiente.referencia;
-  
-      // Establecer que los campos están en blanco
-      this.camposEnBlanco = true;
+      this.mostrarAlertaPiso = !this.ambiente.piso?.trim();
+      this.mostrarAlertaFoto = !this.ambiente.foto?.trim();
+      if(this.ambiente.foto){
+        this.mostrarAlertaFoto=!urlPattern.test(this.ambiente.foto?.trim());
+      }
+      this.mostrarAlertaContacto = !this.ambiente.contacto?.trim();
+      if(this.ambiente.contacto){
+        this.mostrarAlertaContacto=!contactoPattern.test(this.ambiente.contacto?.trim());
+      }
+      this.mostrarAlertaHorario = !this.ambiente.horario?.trim();
+      this.mostrarAlertaReferencia = !this.ambiente.referencia?.trim();
       return;
     }
-  
+
     // Si todos los campos están completos y válidos, procede a guardar los datos
-    this.service.crearAmbiente(this.ambiente).subscribe(() => {
+    this.service.crearAmbiente(this.ambiente).subscribe(
+      (resp: any) => {
       // Lógica adicional después de guardar, si es necesario
-      console.log(this.ambiente);
+      if(resp.Error==="El id ya existe"){
+        this.mostrarAlertaCodigoExistencia=true;
+        return;
+      }else{
+        this.router.navigate(['/directorio']);
+      }
     });
-  
-    this.router.navigate(['/directorio']);
+
+
   }
-  
-  
 
   //validación de ingreso de dato ID
   validateCodigoFormat(event: any) {
-    const codigo = event.target.value.trim(); // Eliminar espacios en blanco al inicio y al final
+    const codigo = event.target.value;
 
     // Expresión regular para verificar el formato (2 letras mayúsculas seguidas de 2 números)
     const codigoRegex = /^[A-Z]{2}\d{2}$/;
@@ -111,29 +118,6 @@ export class AgregarambienteComponent {
     } else {
       this.mostrarAlertaCodigo = false; // Si cumple el formato, ocultar la alerta
     }
-  }
-
-  validarYGuardarAmbiente() {
-    // Validar si todos los campos están en blanco o contienen solo espacios en blanco
-    if (this.areAllFieldsBlank()) {
-      // Mostrar una alerta o realizar alguna acción para indicar que los campos están vacíos
-      alert('Por favor, completa los campos antes de guardar.');
-    } else {
-      // Si los campos no están vacíos, llamar a la función guardarAmbiente()
-      this.guardarAmbiente();
-    }
-  }
-
-  // Función para verificar si todos los campos están en blanco o contienen solo espacios en blanco
-  areAllFieldsBlank(): boolean {
-    const campos = [
-      this.ambiente.id,
-      this.ambiente.descripcion,
-      // Agrega otros campos aquí
-    ];
-
-    // Verifica si todos los campos están en blanco o contienen solo espacios en blanco
-    return campos.every(campo => !campo || campo.trim() === '');
   }
 
 

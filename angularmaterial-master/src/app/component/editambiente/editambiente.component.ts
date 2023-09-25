@@ -32,6 +32,7 @@ export class EditambienteComponent {
   mostrarAlertaContacto: boolean = false;
   mostrarAlertaHorario: boolean = false;
   mostrarAlertaReferencia: boolean = false;
+  soloLectura: boolean=true;
 
   constructor(
     private route: ActivatedRoute,
@@ -68,28 +69,34 @@ export class EditambienteComponent {
   }
 
   actualizarAmbiente() {
-    // Validar los campos antes de actualizar
-    if (
-      !this.ambiente.id ||
-      !this.ambiente.descripcion ||
-      !this.ambiente.area ||
-      !this.ambiente.pabellon ||
-      !this.ambiente.piso ||
-      !this.ambiente.foto ||
-      !this.ambiente.contacto ||
-      !this.ambiente.horario ||
-      !this.ambiente.referencia
-    ) {
-      // Mostrar alertas para campos vacíos o inválidos
-      this.mostrarAlertaCodigo = !this.ambiente.id;
-      this.mostrarAlertaDescripcion = !this.ambiente.descripcion;
-      this.mostrarAlertaArea = !this.ambiente.area;
+
+    const codigoRegex = /^[A-Z]{2}\d{2}$/;
+
+    const urlPattern = /^(http:\/\/|https:\/\/)/i;
+
+    const contactoPattern = /^[a-z0-9._%+-]+@usmp\.pe$/;
+
+    if (!this.ambiente.id?.trim()|| !codigoRegex.test(this.ambiente.id?.trim()) || !this.ambiente.descripcion?.trim() || !this.ambiente.area || !this.ambiente.pabellon || !this.ambiente.piso?.trim() || !this.ambiente.foto?.trim() || !urlPattern.test(this.ambiente.foto) || !this.ambiente.contacto?.trim() || !contactoPattern.test(this.ambiente.contacto?.trim()) || !this.ambiente.horario?.trim() || !this.ambiente.referencia?.trim()){
+      // Mostrar alertas para campos vacíos
+
+      this.mostrarAlertaCodigo = !this.ambiente.id?.trim();
+      if(this.ambiente.id){
+        this.mostrarAlertaCodigo = !codigoRegex.test(this.ambiente.id?.trim());
+      }
+      this.mostrarAlertaDescripcion = !this.ambiente.descripcion?.trim();
       this.mostrarAlertaPabellon = !this.ambiente.pabellon;
-      this.mostrarAlertaPiso = !this.ambiente.piso;
-      this.mostrarAlertaFoto = !this.ambiente.foto;
-      this.mostrarAlertaContacto = !this.ambiente.contacto;
-      this.mostrarAlertaHorario = !this.ambiente.horario;
-      this.mostrarAlertaReferencia = !this.ambiente.referencia;
+      this.mostrarAlertaArea = !this.ambiente.area;
+      this.mostrarAlertaPiso = !this.ambiente.piso?.trim();
+      this.mostrarAlertaFoto = !this.ambiente.foto?.trim();
+      if(this.ambiente.foto){
+        this.mostrarAlertaFoto=!urlPattern.test(this.ambiente.foto?.trim());
+      }
+      this.mostrarAlertaContacto = !this.ambiente.contacto?.trim();
+      if(this.ambiente.contacto){
+        this.mostrarAlertaContacto=!contactoPattern.test(this.ambiente.contacto?.trim());
+      }
+      this.mostrarAlertaHorario = !this.ambiente.horario?.trim();
+      this.mostrarAlertaReferencia = !this.ambiente.referencia?.trim();
       return;
     }
 
@@ -99,10 +106,6 @@ export class EditambienteComponent {
         // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito.
         console.log('Ambiente actualizado con éxito', response);
         this.router.navigate(['/directorio']);
-      },
-      (error) => {
-        // Manejar errores, por ejemplo, mostrar un mensaje de error al usuario.
-        console.error('Error al actualizar el ambiente', error);
       }
     );
   }
@@ -131,6 +134,11 @@ export class EditambienteComponent {
     } else {
       this.mostrarAlertaFoto = false; // No mostrar alerta si el campo está vacío o undefined
     }
+  }
+
+  validateContacto() {
+    const contactoPattern = /^[a-z0-9._%+-]+@usmp\.pe$/;
+    this.mostrarAlertaContacto = !contactoPattern.test(this.ambiente.contacto || '');
   }
 
 loadArea() {
