@@ -1,0 +1,17 @@
+.content {
+    display: flex;
+  }
+  
+  .side-menu {
+    /* Estilos para el menú lateral, puedes personalizarlos según tus necesidades */
+    width: 250px; /* Ancho del menú lateral */
+  }
+  
+  .main-content {
+    /* Estilos para el contenido principal, puedes personalizarlos según tus necesidades */
+    flex: 1; /* El contenido principal ocupará todo el espacio restante */
+    padding: 20px; /* Espaciado opcional */
+  }
+
+  
+  
