@@ -1,6 +1,8 @@
-export class placa{
-    Plac_Codigo?: string;
-    Pabe_Codigo?: string;
-    Plac_Piso?: string;
-    Plac_EnlaceFoto?: string;
+import { Pabellon } from "./Pabellon";
+
+export class Placa{
+    id?: string;
+    pabellon?: Pabellon;
+    piso?: string;
+    foto?: string;
 }

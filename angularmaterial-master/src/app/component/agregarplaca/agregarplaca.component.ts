@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Pabellon } from 'src/app/model/Pabellon';
+import { Placa } from 'src/app/model/Placa';
 import { MasterService } from 'src/app/service/master.service';
 
 @Component({
@@ -8,8 +10,12 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregarplaca.component.css']
 })
 export class AgregarplacaComponent {
+  disableInput = false;
   urlFoto: string = '';
   invalidUrl: boolean = false;
+  pabellones: Pabellon[] = [];
+  id: string = '';
+  placas: Placa = new Placa;
 
   constructor(private router: Router, private service: MasterService) {}
 
@@ -22,6 +28,18 @@ export class AgregarplacaComponent {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
+
+  ngOnInit(): void {
+    this.service.GetPabellon().subscribe(res => {
+      this.pabellones = res;
+    });
+
+    this.placas = new Placa();
+  }
+
+  guardarPlaca() {
+    this.service.crearPlaca(this.placas).subscribe()
+  };
 
   //Contenido del menú lateral -->
 visitante(){

@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router';
-import { placa } from 'src/app/model/Placa';
+import { Placa } from 'src/app/model/Placa';
 
 @Component({
   selector: 'app-placa',
@@ -13,7 +13,7 @@ import { placa } from 'src/app/model/Placa';
   styleUrls: ['./placa.component.css']
 })
 export class PlacaComponent {
-  customerlist !: placa[];
+  placas: Placa[]= [];
   dataSource: any;
   displayedColumns: string[] = ["Plac_Codigo", "Plac_Piso", "Pabe_Codigo", "action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
@@ -30,8 +30,8 @@ export class PlacaComponent {
 
   loadcustomer(): void {
     this.service.GetPlaca().subscribe(res => {
-      this.customerlist = res;
-      this.dataSource = new MatTableDataSource<placa>(this.customerlist);
+      this.placas = res;
+      this.dataSource = new MatTableDataSource<Placa>(this.placas);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
     });

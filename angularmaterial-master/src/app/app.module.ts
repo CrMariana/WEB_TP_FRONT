@@ -26,7 +26,7 @@ import { MaterialModule } from './material-module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './helpers/auth.interceptor';
-import { EditplacaComponent } from './editplaca/editplaca.component';
+import { EditplacaComponent } from './component/editplaca/editplaca.component';
 
 @NgModule({
   declarations: [

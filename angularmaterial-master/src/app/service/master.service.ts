@@ -5,6 +5,7 @@ import { Area } from '../model/Area';
 import { Pabellon } from '../model/Pabellon';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Administrador } from '../model/Administrador';
+import { Placa } from '../model/Placa';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class MasterService {
   rutaGlobalArea = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/area/'
   rutaGlobalPabellon = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/pabellon/'
   rutaGlobalLogin = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/login'
+  rutaGlobalPlaca= 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/placa/'
 
   constructor(private http: HttpClient) { }
 
@@ -60,7 +62,11 @@ export class MasterService {
 
   // Otros métodos
   GetPlaca() {
-    return this.http.get<[]>("");
+    return this.http.get<Placa[]>(this.rutaGlobalPlaca + "listar");
+  }
+
+  crearPlaca(placa: Placa) {
+    return this.http.post(this.rutaGlobalPlaca + "crear", placa);
   }
 
   GetVisitante() {
