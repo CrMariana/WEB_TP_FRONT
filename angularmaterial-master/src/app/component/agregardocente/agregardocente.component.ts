@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Docente } from 'src/app/model/Docente';
 import { MasterService } from 'src/app/service/master.service';
 
 @Component({
@@ -8,10 +9,11 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregardocente.component.css']
 })
 export class AgregardocenteComponent {
-  Nombre: string = '';
-  ApellidoP: string = '';
+  nombres: string = '';
+  apePaterno: string = '';
   inputNombre: boolean = false;
   inputApellidoP: boolean = false;
+  docentes: Docente = new Docente;
 
   constructor(private router: Router, private service: MasterService) {}
 
@@ -22,16 +24,23 @@ export class AgregardocenteComponent {
 
   validateNombre() {
     // Verificar si el valor no está vacío y contiene números
-    if (this.Nombre.trim() !== '' && /\d/.test(this.Nombre)) {
+    if (this.nombres.trim() !== '' && /\d/.test(this.nombres)) {
       this.inputNombre = true;
     } else {
       this.inputNombre = false;
     }
   }
 
+  guardarDocente() {
+    this.service.crearDocente(this.docentes).subscribe(() => {
+      // Redireccionar a la vista de "placas" después de guardar con éxito
+      this.router.navigate(['/docente']);
+    });
+  }
+
   validateApellidoP() {
     // Verificar si el valor no está vacío y contiene números
-    if (this.ApellidoP.trim() !== '' && /\d/.test(this.ApellidoP)) {
+    if (this.apePaterno.trim() !== '' && /\d/.test(this.apePaterno)) {
       this.inputApellidoP = true;
     } else {
       this.inputApellidoP = false;
