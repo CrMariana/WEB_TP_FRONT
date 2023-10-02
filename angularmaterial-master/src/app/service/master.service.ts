@@ -6,6 +6,7 @@ import { Pabellon } from '../model/Pabellon';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Administrador } from '../model/Administrador';
 import { Placa } from '../model/Placa';
+import { Docente } from '../model/Docente';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class MasterService {
   rutaGlobalPabellon = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/pabellon/'
   rutaGlobalLogin = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/login'
   rutaGlobalPlaca= 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/placa/'
+  rutaGlobalDocente='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/docente/'
 
   constructor(private http: HttpClient) { }
 
@@ -81,6 +83,23 @@ export class MasterService {
     return this.http.post<Placa>(this.rutaGlobalPlaca + "actualizar", placa);
   }
 
+  // Métodos Docente
+  GetDocente() {
+    return this.http.get<Docente[]>(this.rutaGlobalDocente + "listar");
+  }
+
+  crearDocente(docente: Placa) {
+    return this.http.post(this.rutaGlobalDocente + "crear", docente);
+  }
+
+  BuscarDocente(id:any) {
+    return this.http.post<Docente>(this.rutaGlobalDocente + "buscar", id);
+  }
+
+  actualizarDocente(docente: Docente) {
+    return this.http.post<Docente>(this.rutaGlobalDocente + "actualizar", docente);
+  }
+
   // Otros Métodos
 
   GetVisitante() {
@@ -88,10 +107,6 @@ export class MasterService {
   }
 
   GetGraduado() {
-    return this.http.get<[]>("");
-  }
-
-  GetDocente() {
     return this.http.get<[]>("");
   }
 

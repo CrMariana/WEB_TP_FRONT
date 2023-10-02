@@ -27,6 +27,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './helpers/auth.interceptor';
 import { EditplacaComponent } from './component/editplaca/editplaca.component';
+import { EditdocenteComponent } from './component/editdocente/editdocente.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { EditplacaComponent } from './component/editplaca/editplaca.component';
     AgregarasignaturaComponent,
     AgregarambienteComponent,
     EditplacaComponent,
+    EditdocenteComponent,
   ],
   imports: [
     BrowserModule,

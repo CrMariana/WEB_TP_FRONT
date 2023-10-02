@@ -38,8 +38,12 @@ export class AgregarplacaComponent {
   }
 
   guardarPlaca() {
-    this.service.crearPlaca(this.placas).subscribe()
-  };
+    this.service.crearPlaca(this.placas).subscribe(() => {
+      // Redireccionar a la vista de "placas" después de guardar con éxito
+      this.router.navigate(['/placa']);
+    });
+  }
+  
 
   //Contenido del menú lateral -->
 visitante(){

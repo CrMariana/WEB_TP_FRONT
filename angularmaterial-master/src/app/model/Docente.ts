@@ -1,6 +1,5 @@
-export class docente{
-    Doce_Codigo?: string;
-    Doce_Nombres?: string;
-    Doce_ApePaterno?: string;
-    Doce_ApeMaterno?: string;
+export class Docente{
+    id?: string;
+    nombres?: string;
+    apePaterno?: string;
 }

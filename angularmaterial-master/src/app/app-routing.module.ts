@@ -19,6 +19,7 @@ import { VisitanteComponent } from './component/visitante/visitante.component';
 import { AsignaturaComponent } from './component/asignatura/asignatura.component';
 import { authGuard } from './helpers/auth.guard';
 import { EditplacaComponent } from './component/editplaca/editplaca.component';
+import { EditdocenteComponent } from './component/editdocente/editdocente.component';
 
 const routes: Routes = [
 
@@ -45,6 +46,8 @@ const routes: Routes = [
   {path:'graduado',component:GraduadoComponent,canActivate:[authGuard]},
   {path:'editplaca',component:EditplacaComponent,canActivate:[authGuard]},
   {path:'editplaca/:id',component:EditplacaComponent,canActivate:[authGuard]},
+  {path:'editdocente',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editdocente/:id',component:EditdocenteComponent,canActivate:[authGuard]},
 ];
 
 @NgModule({
