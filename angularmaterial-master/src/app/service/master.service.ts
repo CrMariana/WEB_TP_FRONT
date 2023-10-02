@@ -20,6 +20,8 @@ export class MasterService {
 
   constructor(private http: HttpClient) { }
 
+  // Métodos Inicio Sesión
+
   Ingresar(administrador: Administrador){
     return this.http.post(this.rutaGlobalLogin,administrador);
   }
@@ -35,6 +37,8 @@ export class MasterService {
   deleteToken(){
     localStorage.removeItem('token');
   }
+
+  // Métodos Ambiente
 
   GetAmbiente() {
     return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente + "listar");
@@ -60,7 +64,7 @@ export class MasterService {
     return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "crear", ambiente);
   }
 
-  // Otros métodos
+  // Métodos Placa
   GetPlaca() {
     return this.http.get<Placa[]>(this.rutaGlobalPlaca + "listar");
   }
@@ -68,6 +72,16 @@ export class MasterService {
   crearPlaca(placa: Placa) {
     return this.http.post(this.rutaGlobalPlaca + "crear", placa);
   }
+
+  BuscarPlaca(id:any) {
+    return this.http.post<Placa>(this.rutaGlobalPlaca + "buscar", id);
+  }
+
+  actualizarPlaca(placa: Placa) {
+    return this.http.post<Placa>(this.rutaGlobalPlaca + "actualizar", placa);
+  }
+
+  // Otros Métodos
 
   GetVisitante() {
     return this.http.get<[]>("");

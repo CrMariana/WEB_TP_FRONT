@@ -105,7 +105,7 @@
                 <th mat-header-cell *matHeaderCellDef> EDITAR</th>
                 <td mat-cell *matCellDef="let element">
     
-                  <button  mat-raised-button color="">Editar</button>
+                  <button (click)="editPlaca(element.id)" mat-raised-button color="">Editar</button>
                 </td>
               </ng-container>
   
