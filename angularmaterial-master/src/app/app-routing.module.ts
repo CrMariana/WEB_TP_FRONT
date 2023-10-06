@@ -48,6 +48,8 @@ const routes: Routes = [
   {path:'editplaca/:id',component:EditplacaComponent,canActivate:[authGuard]},
   {path:'editdocente',component:EditdocenteComponent,canActivate:[authGuard]},
   {path:'editdocente/:id',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editasignatura',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editasignatura/:id',component:EditdocenteComponent,canActivate:[authGuard]},
 ];
 
 @NgModule({

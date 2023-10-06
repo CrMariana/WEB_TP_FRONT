@@ -84,30 +84,29 @@
             <!-- Columnas de la tabla -->
             <ng-container matColumnDef="Asig_Codigo">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Codigo}}</td>
+              <td mat-cell *matCellDef="let element">{{element.id}}</td>
             </ng-container>
   
             <ng-container matColumnDef="Asig_Descripcion">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> NOMBRE</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Descripcion}}</td>
+              <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
             </ng-container>
   
             <ng-container matColumnDef="Asig_Tipo">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> TIPO DE ASIGNATURA</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Tipo}}</td>
+              <td mat-cell *matCellDef="let element">{{element.tipoAsig}}</td>
             </ng-container>
   
             <ng-container matColumnDef="Asig_TipoEstudio">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> TIPO DE ESTUDIO</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_TipoEstudio}}</td>
+              <td mat-cell *matCellDef="let element">{{element.tipoEstudio}}</td>
             </ng-container>
   
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> EDITAR</th>
               <td mat-cell *matCellDef="let element">
-                <button (click)="(element.id)" mat-raised-button color="primary">Edit</button>
-                <button mat-raised-button color="warn">Delete</button>
-                <button (click)="(element.id)" mat-raised-button color="primary">Detail</button>
+  
+                <button  mat-raised-button color="">Editar</button>
               </td>
             </ng-container>
   

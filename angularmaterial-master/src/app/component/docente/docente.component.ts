@@ -31,8 +31,6 @@ export class DocenteComponent {
     this.router.navigate(['/editdocente', id]);
   }
 
-
-
   loadcustomer() {
     this.service.GetDocente().subscribe(res => {
       this.docentes = res;

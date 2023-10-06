@@ -4,8 +4,9 @@ import { MasterService } from 'src/app/service/master.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { asignatura } from 'src/app/model/Asignatura';
+import { Asignatura } from 'src/app/model/Asignatura';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-asignatura',
@@ -13,13 +14,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./asignatura.component.css']
 })
 export class AsignaturaComponent {
-  customerlist !: asignatura[];
+  asignaturas: Asignatura[] = [];
   dataSource: any;
   displayedColumns: string[] = ["Asig_Codigo", "Asig_Descripcion", "Asig_Tipo", "Asig_TipoEstudio", "action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  myFormGroup: FormGroup; // Agregamos el FormGroup aquí
 
-  constructor(private service: MasterService, private dialog: MatDialog, private router: Router) {
+  constructor(private service: MasterService, private dialog: MatDialog, private router: Router, private fb: FormBuilder) {
+    this.myFormGroup = this.fb.group({
+      id: new FormControl('', [Validators.required])
+    });
+
     this.loadcustomer();
   }
 
@@ -27,11 +33,11 @@ export class AsignaturaComponent {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
-  
+
   loadcustomer() {
     this.service.GetAsignatura().subscribe(res => {
-      this.customerlist = res;
-      this.dataSource = new MatTableDataSource<asignatura>(this.customerlist);
+      this.asignaturas = res;
+      this.dataSource = new MatTableDataSource<Asignatura>(this.asignaturas);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
     });

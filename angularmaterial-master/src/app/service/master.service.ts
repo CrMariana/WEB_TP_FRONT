@@ -7,6 +7,7 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { Administrador } from '../model/Administrador';
 import { Placa } from '../model/Placa';
 import { Docente } from '../model/Docente';
+import { Asignatura } from '../model/Asignatura';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class MasterService {
   rutaGlobalLogin = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/login'
   rutaGlobalPlaca= 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/placa/'
   rutaGlobalDocente='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/docente/'
+  rutaGlobalAsignatura='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/asignatura/'
 
   constructor(private http: HttpClient) { }
 
@@ -100,6 +102,24 @@ export class MasterService {
     return this.http.post<Docente>(this.rutaGlobalDocente + "actualizar", docente);
   }
 
+  // Métodos Asignatura
+  GetAsignatura() {
+    return this.http.get<Asignatura[]>(this.rutaGlobalAsignatura + "listar");
+  }
+
+  crearAsignatura(asignatura: Asignatura) {
+    return this.http.post(this.rutaGlobalAsignatura + "crear", asignatura);
+  }
+
+  BuscarAsignatura(id:any) {
+    return this.http.post<Asignatura>(this.rutaGlobalAsignatura + "buscar", id);
+  }
+
+  actualizarAsignatura(asignatura: Asignatura) {
+    return this.http.post<Asignatura>(this.rutaGlobalAsignatura + "actualizar", asignatura);
+  }
+
+
   // Otros Métodos
 
   GetVisitante() {
@@ -118,7 +138,4 @@ export class MasterService {
     return this.http.get<[]>("");
   }
 
-  GetAsignatura() {
-    return this.http.get<[]>("");
-  }
 }

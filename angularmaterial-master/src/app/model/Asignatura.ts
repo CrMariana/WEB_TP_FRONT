@@ -1,6 +1,6 @@
-export class asignatura{
-    Asig_Codigo?: number;
-    Asig_Descripcion?: string;
-    Asig_Tipo?: string;
-    Asig_TipoEstudio?: string;
+export class Asignatura{
+    id?: string;
+    descripcion?: string;
+    tipoAsig?: string;
+    tipoEstudio?: string;
 }
