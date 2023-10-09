@@ -52,6 +52,10 @@ export class AsignaturaComponent {
     this.router.navigate(['/agregarasignatura']);
   }
 
+  editAsignatura(id: number) {
+    this.router.navigate(['/editasignatura',id]);
+  }
+
 //Contenido del menú lateral -->
 visitante(){
   this.router.navigate(['/visitante']);

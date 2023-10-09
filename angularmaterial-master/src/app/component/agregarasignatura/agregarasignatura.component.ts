@@ -9,13 +9,12 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregarasignatura.component.css']
 })
 export class AgregarasignaturaComponent {
-  disableInput = false;
-  descripcion: string= '';
-  tipoAsig: string= '';
-  tipoEstudio: string = '';
-  id: string = '';
-  asignaturas: Asignatura = new Asignatura;
 
+  asignaturaObj: Asignatura = new Asignatura;
+  alertaNombre: boolean=false;
+  alertaTipoAsig: boolean=false;
+  alertaTipoEstudio: boolean=false;
+  error: boolean=false;
 
   constructor(private router: Router, private service: MasterService) { }
 
@@ -25,10 +24,26 @@ export class AgregarasignaturaComponent {
   }
 
   guardarAsignatura() {
-    this.service.crearAsignatura(this.asignaturas).subscribe(() => {
-      // Redireccionar a la vista de "placas" después de guardar con éxito
-      this.router.navigate(['/asignatura']);
-    });
+    if(!this.asignaturaObj.descripcion?.trim() || !this.asignaturaObj.tipoAsig?.trim() || !this.asignaturaObj.tipoEstudio?.trim()){
+      this.alertaNombre=!this.asignaturaObj.descripcion?.trim();
+      this.alertaTipoAsig=!this.asignaturaObj.tipoAsig?.trim()
+      this.alertaTipoEstudio=!this.asignaturaObj.tipoEstudio?.trim()
+      return;
+    }else{
+      this.alertaNombre=false
+      this.alertaTipoAsig=false
+      this.alertaTipoEstudio=false
+      this.service.crearAsignatura(this.asignaturaObj).subscribe(
+        (resp: any) => {
+        // Lógica adicional después de guardar, si es necesario
+        if(resp.Error){
+          this.error=true;
+          return;
+        }else{
+          this.router.navigate(['/asignatura']);
+        }
+      });
+    }
   }
 
   //Contenido del menú lateral -->
