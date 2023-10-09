@@ -10,18 +10,23 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregarplaca.component.css']
 })
 export class AgregarplacaComponent {
-  disableInput = false;
-  urlFoto: string = '';
-  invalidUrl: boolean = false;
   pabellones: Pabellon[] = [];
-  id: string = '';
-  placas: Placa = new Placa;
+  placaObj: Placa = new Placa;
+  alertaUrl: boolean=false;
+  alertaId: boolean=false;
+  alertaIdExistencia: boolean=false;
+  alertaPiso: boolean=false;
+  alertaPabellon: boolean=false;
 
   constructor(private router: Router, private service: MasterService) {}
 
-  validateUrl() {
-    const urlPattern = /^(ftp|http|https):\/\/[^ "]+$/;
-    this.invalidUrl = !urlPattern.test(this.urlFoto);
+  validateUrl(foto: any){
+    if(foto.target.value==""){
+      this.alertaUrl=false;
+    }else{
+      const urlPattern = /^(http:\/\/|https:\/\/)/i;
+      this.alertaUrl=!urlPattern.test(foto.target.value)
+    }
   }
 
   cerrarSesion(){
@@ -34,16 +39,42 @@ export class AgregarplacaComponent {
       this.pabellones = res;
     });
 
-    this.placas = new Placa();
+    this.placaObj = new Placa();
   }
 
   guardarPlaca() {
-    this.service.crearPlaca(this.placas).subscribe(() => {
-      // Redireccionar a la vista de "placas" después de guardar con éxito
-      this.router.navigate(['/placa']);
-    });
+    const urlPattern = /^(http:\/\/|https:\/\/)/i;
+    if(this.placaObj.id?.trim().length!=7 || !this.placaObj.pabellon || !this.placaObj.foto?.trim() || !urlPattern.test(this.placaObj.foto) || !this.placaObj.piso?.trim()){
+      if(this.placaObj.id?.trim().length!=7){
+        this.alertaId=true;
+      }else{
+        this.alertaId=false;
+      }
+      this.alertaPiso=!this.placaObj.piso
+      this.alertaPabellon=!this.placaObj.pabellon
+      this.alertaUrl=!this.placaObj.foto?.trim()
+      if(!urlPattern.test(this.placaObj.foto!)){
+        this.alertaUrl=!urlPattern.test(this.placaObj.foto!)
+      }
+
+      return;
+    }else{
+      this.alertaId=false
+      this.service.crearPlaca(this.placaObj).subscribe(
+        (resp: any) => {
+        if(resp.Error){
+          this.alertaIdExistencia=true;
+          console.log(resp)
+          return;
+        }else{
+
+          this.router.navigate(['/placa']);
+        }
+      });
+    }
+
   }
-  
+
 
   //Contenido del menú lateral -->
 visitante(){
