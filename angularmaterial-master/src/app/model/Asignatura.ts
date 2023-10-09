@@ -1,5 +1,5 @@
 export class Asignatura{
-    id?: string;
+    id?: number;
     descripcion?: string;
     tipoAsig?: string;
     tipoEstudio?: string;
