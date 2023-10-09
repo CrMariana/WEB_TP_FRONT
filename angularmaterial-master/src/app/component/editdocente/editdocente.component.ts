@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Docente } from 'src/app/model/Docente';
 import { MasterService } from 'src/app/service/master.service';
@@ -9,67 +9,56 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./editdocente.component.css']
 })
 export class EditdocenteComponent {
-  docentes: Docente = {};
-  nombres: string = '';
-  apePaterno: string = '';
-  id!: string;
+  docenteObj: Docente =new Docente
+  alertaNombres: boolean=false;
+  alertaApellidos: boolean=false;
+  soloLectura: boolean=true;
+  error: boolean=false;
+
 
   constructor(
     private route: ActivatedRoute,
     private service: MasterService,
     private router: Router
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
-    // Obtener el ID de la placa desde los parámetros de la ruta
-    this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id') || ''; // Inicializar id con una cadena vacía si params.get('id') es null o undefined
-  
-      // Si hay un ID válido, buscar el docente correspondiente
-      if (this.id) {
-        this.service.BuscarDocente({ id: this.id }).subscribe((res: Docente) => {
-          this.docentes = res; // Usar una variable docente en lugar de docentes si solo esperas un docente
-          if (this.docentes && this.docentes.nombres) {
-            // Aquí puedes realizar acciones adicionales con el docente encontrado
+    // Obtener el ID del docente desde los parámetros de la ruta
+    this.route.paramMap.subscribe((params:any) => {
+      const parametro = {
+        id:parseInt(params.get("id"))
+      }; // Inicializar id con una cadena vacía si params.get('id') es null o undefined
+        this.service.BuscarDocente(parametro).subscribe(
+          res =>{
+            this.docenteObj=res;
+            console.log(res)
           }
-        });
-      }
-    });
+        )
+        console.log(parametro);
+      });
   }
-  
-  // Guardar los cambios en la placa
+
+  // Guardar los cambios en el docente
   actualizarDocente() {
-    // Verificar si algún campo obligatorio está vacío
-    if (
-      !this.docentes.id?.trim() ||
-      !this.docentes.id ||
-      !this.docentes.nombres?.trim() ||
-      !this.docentes.apePaterno?.trim()
-    ) {
-      // Mostrar una alerta de campos vacíos
-      alert('Por favor, complete todos los campos obligatorios.');
+    if(!this.docenteObj.nombres?.trim() || !this.docenteObj.apePaterno?.trim()){
+      this.alertaNombres=!this.docenteObj.nombres?.trim()
+      this.alertaApellidos=!this.docenteObj.apePaterno?.trim()
       return;
+    }else{
+      this.alertaNombres=false
+      this.alertaApellidos=false
+      this.service.actualizarDocente(this.docenteObj).subscribe(
+        (resp: any) => {
+        if(resp.Error){
+          this.error=true;
+          return;
+        }else{
+          console.log(this.docenteObj)
+          this.router.navigate(['/docente']);
+        }
+      });
     }
-  
-    // Crear un objeto Docente con los datos del formulario
-    const docenteActualizado: Docente = {
-      id: this.docentes.id,
-      nombres: this.docentes.nombres,
-      apePaterno: this.docentes.apePaterno,
-    };
-  
-    // Llamar al servicio para actualizar la placa
-    this.service.actualizarDocente(docenteActualizado).subscribe(
-      (response) => {
-        // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito.
-        console.log('Actualizada con éxito', response);
-        this.router.navigate(['/docente']);
-      },
-      (error) => {
-        // Manejar errores si es necesario
-        console.error('Error al actualizar', error);
-      }
-    );
+
   }
 
   // Métodos de navegación

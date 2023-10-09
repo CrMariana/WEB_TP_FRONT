@@ -111,12 +111,12 @@ export class MasterService {
     return this.http.post(this.rutaGlobalAsignatura + "crear", asignatura);
   }
 
-  BuscarAsignatura(id:any) {
+  buscarAsignatura(id:any) {
     return this.http.post<Asignatura>(this.rutaGlobalAsignatura + "buscar", id);
   }
 
   actualizarAsignatura(asignatura: Asignatura) {
-    return this.http.post<Asignatura>(this.rutaGlobalAsignatura + "actualizar", asignatura);
+    return this.http.post(this.rutaGlobalAsignatura + "actualizar", asignatura);
   }
 
 

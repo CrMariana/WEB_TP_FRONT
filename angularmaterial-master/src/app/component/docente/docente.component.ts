@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { Docente } from 'src/app/model/Docente';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-docente',
   templateUrl: './docente.component.html',
@@ -17,8 +18,12 @@ export class DocenteComponent {
   displayedColumns: string[] = ["Doce_Codigo", "Doce_Nombres", "Doce_Apellido","action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  myFormGroup: FormGroup; 
 
-  constructor(private service: MasterService, private dialog: MatDialog, private router: Router) {
+  constructor(private service: MasterService, private dialog: MatDialog, private router: Router, private fb: FormBuilder) {
+    this.myFormGroup = this.fb.group({
+      id: new FormControl('', [Validators.required])
+    });
     this.loadcustomer();
   }
 
@@ -28,7 +33,7 @@ export class DocenteComponent {
   }
 
   editDocente(id: string) {
-    this.router.navigate(['/editdocente', id]);
+    this.router.navigate(['/editdocente',id]);
   }
 
   loadcustomer() {

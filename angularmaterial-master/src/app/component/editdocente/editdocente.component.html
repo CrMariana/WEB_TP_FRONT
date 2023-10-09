@@ -73,30 +73,32 @@
             </div>
 
             <mat-card-content>
-                <!-- Campo CÓDIGO -->
+                <!-- Campo ID -->
                 <div class="form-group row">
-                    <label for="inputCodigo" class="col-sm-2 col-form-label">ID</label>
+                    <label for="id" class="col-sm-2 col-form-label">ID</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inputCodigo" placeholder=""
-                            [(ngModel)]="docentes.id" name="codigo" />
+                        <input type="text"  [readonly]="soloLectura" class="form-control" id="id" placeholder="" [(ngModel)]="docenteObj.id"
+                            name="id" />
                     </div>
                 </div>
 
                 <!-- Campo NOMBRE -->
                 <div class="form-group row">
-                    <label for="inputCodigo" class="col-sm-2 col-form-label">NOMBRE</label>
+                    <label for="nombres" class="col-sm-2 col-form-label">NOMBRE</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inputCodigo" placeholder=""
-                            [(ngModel)]="docentes.nombres" name="codigo" />
+                        <input type="text" class="form-control" id="nombres" placeholder=""
+                            [(ngModel)]="docenteObj.nombres" name="nombres" />
+                        <div class="alert alert-danger" *ngIf="alertaNombres">El campo es obligatorio.</div>
                     </div>
                 </div>
 
                 <!-- Campo APELLIDO -->
                 <div class="form-group row">
-                    <label for="inputCodigo" class="col-sm-2 col-form-label">APELLIDO</label>
+                    <label for="apePaterno" class="col-sm-2 col-form-label">APELLIDO</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="inputCodigo" placeholder=""
-                            [(ngModel)]="docentes.apePaterno" name="codigo" />
+                        <input type="text" class="form-control" id="apePaterno" placeholder=""
+                            [(ngModel)]="docenteObj.apePaterno" name="apePaterno" />
+                        <div class="alert alert-danger" *ngIf="alertaApellidos">El campo es obligatorio.</div>
                     </div>
                 </div>
 

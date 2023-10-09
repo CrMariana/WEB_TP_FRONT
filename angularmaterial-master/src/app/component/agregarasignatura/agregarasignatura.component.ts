@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Asignatura } from 'src/app/model/Asignatura';
 import { MasterService } from 'src/app/service/master.service';
 
 @Component({
@@ -8,44 +9,58 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregarasignatura.component.css']
 })
 export class AgregarasignaturaComponent {
+  disableInput = false;
+  descripcion: string= '';
+  tipoAsig: string= '';
+  tipoEstudio: string = '';
+  id: string = '';
+  asignaturas: Asignatura = new Asignatura;
 
-  constructor(private router: Router, private service: MasterService) {}
 
-  cerrarSesion(){
+  constructor(private router: Router, private service: MasterService) { }
+
+  cerrarSesion() {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
 
-//Contenido del menú lateral -->
-visitante(){
-  this.router.navigate(['/visitante']);
-}
-asignatura(){
-  this.router.navigate(['/asignatura']);
-}
+  guardarAsignatura() {
+    this.service.crearAsignatura(this.asignaturas).subscribe(() => {
+      // Redireccionar a la vista de "placas" después de guardar con éxito
+      this.router.navigate(['/asignatura']);
+    });
+  }
 
-docente(){
-  this.router.navigate(['/docente']);
-}
+  //Contenido del menú lateral -->
+  visitante() {
+    this.router.navigate(['/visitante']);
+  }
+  asignatura() {
+    this.router.navigate(['/asignatura']);
+  }
 
-graduado(){
-  this.router.navigate(['/graduado']);
-}
+  docente() {
+    this.router.navigate(['/docente']);
+  }
 
-evento(){
-  this.router.navigate(['/evento']);
-}
+  graduado() {
+    this.router.navigate(['/graduado']);
+  }
 
-placa(){
-  this.router.navigate(['/placa']);
-}
+  evento() {
+    this.router.navigate(['/evento']);
+  }
 
-horario(){
-  this.router.navigate(['/horario']);
-}
+  placa() {
+    this.router.navigate(['/placa']);
+  }
 
-directorio(){
-  this.router.navigate(['/directorio']);
-}
+  horario() {
+    this.router.navigate(['/horario']);
+  }
+
+  directorio() {
+    this.router.navigate(['/directorio']);
+  }
 
 }
