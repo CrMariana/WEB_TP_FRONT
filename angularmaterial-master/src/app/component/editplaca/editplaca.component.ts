@@ -10,12 +10,15 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./editplaca.component.css']
 })
 export class EditplacaComponent implements OnInit {
-  placas: Placa = {}; // Inicializar como un objeto vacío
-  pabellonJ: Pabellon = new Pabellon();
+  placaObj: Placa = new Placa
+  pabellonAux: Pabellon = new Pabellon();
   pabellones: Pabellon[] = [];
-  urlFoto: string = '';
-  id!: string; // Utilizar el operador ! para indicar que id no será null o undefined
-  editing: boolean = false;
+  alertaUrl: boolean=false;
+  alertaId: boolean=false;
+  alertaIdExistencia: boolean=false;
+  alertaPiso: boolean=false;
+  alertaPabellon: boolean=false;
+  soloLectura: boolean=true;
 
   constructor(
     private route: ActivatedRoute,
@@ -29,64 +32,64 @@ export class EditplacaComponent implements OnInit {
       this.pabellones = res;
     });
 
-    // Obtener el ID de la placa desde los parámetros de la ruta
     this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id') || ''; // Inicializar id con una cadena vacía si params.get('id') es null o undefined
-
-      // Si hay un ID válido, buscar la placa correspondiente
-      if (this.id) {
-        this.service.BuscarPlaca({ id: this.id }).subscribe((res: Placa) => {
-          this.placas = res;
-          if (this.placas && this.placas.pabellon) {
-            this.pabellonJ = this.placas.pabellon;
-          }
+      const parametro = {
+        id: params.get("id")
+      };
+      if (parametro) {
+        this.service.BuscarPlaca(parametro).subscribe(
+          (res: Placa) => {
+            this.placaObj = res;
+            if (this.placaObj && this.placaObj.pabellon) {
+              this.pabellonAux = this.placaObj.pabellon;
+            }
         });
       }
     });
   }
 
-  // Validar la URL de la foto (puedes implementar tu propia lógica aquí)
-  validateUrl() {
-  }
-
-  // Guardar los cambios en la placa
-  actualizarPlaca() {
-    // Verificar si algún campo obligatorio está vacío
-    if (
-      !this.placas.id?.trim() ||
-      !this.pabellonJ.id ||
-      !this.placas.piso?.trim() ||
-      !this.placas.foto?.trim()
-    ) {
-      // Mostrar una alerta de campos vacíos
-      alert('Por favor, complete todos los campos obligatorios.');
-      return;
+  validateUrl(foto: any) {
+    if(foto.target.value==""){
+      this.alertaUrl=false;
+    }else{
+      const urlPattern = /^(http:\/\/|https:\/\/)/i;
+      this.alertaUrl=!urlPattern.test(foto.target.value)
     }
-  
-    // Crear un objeto Placa con los datos del formulario
-    const placaActualizada: Placa = {
-      id: this.placas.id,
-      pabellon: this.pabellonJ,
-      piso: this.placas.piso,
-      foto: this.placas.foto,
-      // Agregar otros campos de Placa si es necesario
-    };
-  
-    // Llamar al servicio para actualizar la placa
-    this.service.actualizarPlaca(placaActualizada).subscribe(
-      (response) => {
-        // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito.
-        console.log('Placa actualizada con éxito', response);
-        this.router.navigate(['/placa']);
-      },
-      (error) => {
-        // Manejar errores si es necesario
-        console.error('Error al actualizar la placa', error);
-      }
-    );
   }
 
-  // Métodos de navegación
+
+  actualizarPlaca() {
+    const urlPattern = /^(http:\/\/|https:\/\/)/i;
+    if(this.placaObj.id?.trim().length!=7 || !this.placaObj.pabellon || !this.placaObj.foto?.trim() || !urlPattern.test(this.placaObj.foto) || !this.placaObj.piso?.trim()){
+      if(this.placaObj.id?.trim().length!=7){
+        this.alertaId=true;
+      }else{
+        this.alertaId=false;
+      }
+      this.alertaPiso=!this.placaObj.piso
+      this.alertaPabellon=!this.placaObj.pabellon
+      this.alertaUrl=!this.placaObj.foto?.trim()
+      if(!urlPattern.test(this.placaObj.foto!)){
+        this.alertaUrl=!urlPattern.test(this.placaObj.foto!)
+      }
+
+      return;
+    }else{
+      this.alertaId=false
+      this.service.actualizarPlaca(this.placaObj).subscribe(
+        (resp: any) => {
+        if(resp.Error){
+          this.alertaIdExistencia=true;
+          console.log(resp)
+          return;
+        }else{
+          this.router.navigate(['/placa']);
+        }
+      });
+    }
+  }
+
+
   cerrarSesion() {
     this.service.deleteToken();
     this.router.navigate(['']);

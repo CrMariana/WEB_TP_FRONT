@@ -78,48 +78,50 @@
                     <label for="inputCodigo" class="col-sm-2 col-form-label">CÓDIGO</label>
                     <div class="col-sm-8">
                         <input type="text" class="form-control" id="inputCodigo"
-                            placeholder="" [(ngModel)]="placas.id" name="codigo"/>
+                            placeholder="" [readonly]="soloLectura" [(ngModel)]="placaObj.id" name="codigo"/>
+                        <div class="alert alert-danger" *ngIf="alertaId">El ID debe tener 7 digitos.</div>
+                        <div class="alert alert-danger" *ngIf="alertaIdExistencia">El id no existe</div>
                     </div>
                 </div>
-            
+
                 <!-- Campo PABELLÓN -->
                 <div class="form-group row">
                     <label for="pabellonSelect" class="col-sm-2 col-form-label">PABELLÓN</label>
                     <div class="col-sm-8">
-                        <select class="form-control" id="pabellonSelect" [(ngModel)]="pabellonJ.id"
-                            name="pabellon">
-                            <option *ngFor="let pabellon of pabellones" [ngValue]="pabellon.id">{{
-                                pabellon.descripcion }}</option>
+                        <select class="form-control" id="pabellonSelect" [(ngModel)]="pabellonAux.id" name="pabellon">
+                            <option *ngFor="let pabellon of pabellones" [ngValue]="pabellon.id">{{ pabellon.descripcion }}</option>
                         </select>
+                        <div class="alert alert-danger" *ngIf="alertaPabellon">El campo Código es obligatorio.</div>
                     </div>
                 </div>
-            
+
                 <!-- Campo PISO -->
                 <div class="form-group row">
                     <label for="pisoSelect" class="col-sm-2 col-form-label">PISO</label>
                     <div class="col-sm-8">
-                        <select class="form-control" id="pisoSelect" name="piso" [(ngModel)]="placas.piso">
+                        <select class="form-control" id="pisoSelect" name="piso" [(ngModel)]="placaObj.piso">
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                         </select>
+                        <div class="alert alert-danger" *ngIf="alertaPiso">El campo Código es obligatorio.</div>
                     </div>
                 </div>
-            
+
                 <!-- Campo URL FOTO -->
                 <div class="form-group row">
                     <label for="inputFoto" class="col-sm-2 col-form-label">URL FOTO</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" [(ngModel)]="placas.foto" name="foto"
-                            id="inputFoto" (input)="validateUrl()">
+                        <input type="text" class="form-control" [(ngModel)]="placaObj.foto" name="foto" id="inputFoto" (input)="validateUrl($event)">
+                        <div class="alert alert-danger" *ngIf="alertaUrl">Por favor, ingresa una URL válida que comience con "http://" o "https://".</div>
                     </div>
                 </div>
-            
+
                 <!-- Botón de GUARDAR -->
                 <button style="margin-left: 60%;" (click)="actualizarPlaca()"  mat-raised-button color="warn">GUARDAR CAMBIOS</button>
             </mat-card-content>
-            
+
 
         </mat-card>
     </div>
