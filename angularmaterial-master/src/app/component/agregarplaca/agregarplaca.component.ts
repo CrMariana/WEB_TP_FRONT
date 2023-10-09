@@ -59,6 +59,8 @@ export class AgregarplacaComponent {
 
       return;
     }else{
+      this.alertaPiso=false
+      this.alertaPabellon=false
       this.alertaId=false
       this.service.crearPlaca(this.placaObj).subscribe(
         (resp: any) => {

@@ -91,7 +91,7 @@
             <select class="form-control" id="pabellonSelect" [(ngModel)]="placaObj.pabellon" name="pabellon">
               <option *ngFor="let pabellon of pabellones" [ngValue]="pabellon">{{ pabellon.descripcion }}</option>
             </select>
-            <div class="alert alert-danger" *ngIf="alertaPabellon">El campo Código es obligatorio.</div>
+            <div class="alert alert-danger" *ngIf="alertaPabellon">El campo pabellón es obligatorio.</div>
           </div>
         </div>
 
@@ -104,7 +104,7 @@
               <option value="2">2</option>
               <option value="3">3</option>
             </select>
-            <div class="alert alert-danger" *ngIf="alertaPiso">El campo Código es obligatorio.</div>
+            <div class="alert alert-danger" *ngIf="alertaPiso">El campo piso es obligatorio.</div>
           </div>
         </div>
 
