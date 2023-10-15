@@ -8,6 +8,7 @@ import { Administrador } from '../model/Administrador';
 import { Placa } from '../model/Placa';
 import { Docente } from '../model/Docente';
 import { Asignatura } from '../model/Asignatura';
+import { Graduado } from '../model/Graduado';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,8 @@ export class MasterService {
   rutaGlobalPlaca= 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/placa/'
   rutaGlobalDocente='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/docente/'
   rutaGlobalAsignatura='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/asignatura/'
+  rutaGlobalGraduado='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/graduado/'
+
 
   constructor(private http: HttpClient) { }
 
@@ -116,17 +119,30 @@ export class MasterService {
   }
 
   actualizarAsignatura(asignatura: Asignatura) {
-    return this.http.post(this.rutaGlobalAsignatura + "actualizar", asignatura);
+    return this.http.post(this.rutaGlobalGraduado + "actualizar", asignatura);
+  }
+
+  // Métodos Graduado
+  GetGraduado() {
+    return this.http.get<Graduado[]>(this.rutaGlobalGraduado + "listar");
+  }
+
+  crearGraduado(graduado: Graduado) {
+    return this.http.post(this.rutaGlobalGraduado + "crear", graduado);
+  }
+
+  buscarGraduado(id:any) {
+    return this.http.post<Graduado>(this.rutaGlobalGraduado + "buscar", id);
+  }
+
+  actualizarGraduado(graduado: Graduado) {
+    return this.http.post(this.rutaGlobalGraduado + "actualizar", graduado);
   }
 
 
   // Otros Métodos
 
   GetVisitante() {
-    return this.http.get<[]>("");
-  }
-
-  GetGraduado() {
     return this.http.get<[]>("");
   }
 

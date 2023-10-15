@@ -19,12 +19,9 @@
             </div>
           </div>
           <!-- Contenido del menú lateral -->
-           <!-- <mat-list-item>
+          <!-- <mat-list-item>
             <button (click)="visitante()" mat-button> VISITANTES</button>
           </mat-list-item>-->
-          <mat-list-item>
-            <button (click)="asignatura()" mat-button>ASIGNATURA</button>
-          </mat-list-item>
 
           <mat-list-item>
             <button (click)="docente()" mat-button> DOCENTES</button>
@@ -53,9 +50,6 @@
           <mat-list-item>
             <button (click)="cerrarSesion()" mat-button><mat-icon>exit_to_app</mat-icon>CERRAR SESIÓN</button>
           </mat-list-item>
-
-
-
         </mat-nav-list>
       </mat-drawer>
       <mat-drawer-content>
@@ -68,65 +62,55 @@
   <div class="main-content">
     <mat-card>
       <div style="text-align: left; margin: 20px;">
-        <h1 style="font-weight: bold;">CREAR  GRADUADO</h1>
+        <h1 style="font-weight: bold;">AGREGAR GRADUADO</h1>
       </div>
-    
+
       <mat-card-content>
-    
         <div class="form-group row">
-          <label for="inputPassword" class="col-sm-2 col-form-label">NOMBRES</label>
+          <label for="nombres" class="col-sm-2 col-form-label">NOMBRES</label>
           <div class="col-sm-8">
-            <input type="text" class="form-control" id="inputPassword" placeholder="" [(ngModel)]="Nombre" (input)="validateNombre()">
-            <div class="alert alert-danger" *ngIf="inputNombre">
-              Por favor, ingresa solo texto (letras).
-          </div>
+            <input type="text" class="form-control" id="nombres" placeholder="" [(ngModel)]="graduadoObj.nombres">
+            <div class="alert alert-danger" *ngIf="alertaNombres">Por favor, ingrese los nombres.</div>
           </div>
         </div>
-  
+
         <div class="form-group row">
-          <label for="apellidoPaterno" class="col-sm-2 col-form-label">APELLIDO PATERNO</label>
+          <label for="apePaterno" class="col-sm-2 col-form-label">APELLIDO PATERNO</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control" id="apellidoPaterno" placeholder="" [(ngModel)]="ApellidoP" (input)="validateApellidoP()">
-              <div class="alert alert-danger" *ngIf="inputApellidoP">
-                  Por favor, ingresa solo texto (letras).
-              </div>
+            <input type="text" class="form-control" id="apePaterno" placeholder="" [(ngModel)]="graduadoObj.apePaterno">
+            <div class="alert alert-danger" *ngIf="alertaApellidos">Por favor, ingrese los apellidos.</div>
           </div>
-      </div>
-      
+        </div>
+
         <div class="form-group row">
-          <label for="inputRange" class="col-sm-2 col-form-label">APELLIDO MATERNO</label>
+          <label for="apeMaterno" class="col-sm-2 col-form-label">APELLIDO MATERNO</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control" id="" placeholder="">
+            <input type="text" class="form-control" id="apeMaterno" placeholder="" [(ngModel)]="graduadoObj.apeMaterno">
+            <div class="alert alert-danger" *ngIf="alertaApellidos">Por favor, ingrese los apellidos.</div>
           </div>
-       </div>
-      
-       <div class="form-group row">
-          <label for="graduationYear" class="col-sm-2 col-form-label">AÑO DE GRADUACIÓN</label>
+        </div>
+
+        <div class="form-group row">
+          <label for="placaSelect" class="col-sm-2 col-form-label">PLACA</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control" id="graduationYear" placeholder="" [(ngModel)]="anoGraduacion" (input)="validateInput()">
-              <div class="alert alert-danger" *ngIf="invalidInput">
-                  Por favor, ingresa solo números.
-              </div>
+            <select class="form-control" id="placaSelect" [(ngModel)]="graduadoObj.placa" name="placa">
+              <option [ngValue]="null" disabled [selected]="!graduadoObj.placa">Seleccione una placa</option>
+              <option *ngFor="let p of placas" [ngValue]="p.id">{{ p.id }}</option>
+            </select>
+            <div class="alert alert-danger" *ngIf="alertaPlaca">La selección de placa es obligatoria.</div>
           </div>
-      </div>
-      
-  
-      <div class="form-group row">
-          <label for="linkedinLink" class="col-sm-2 col-form-label">LINK DE LINKEDIN</label>
+        </div>
+
+        <div class="form-group row">
+          <label for="url" class="col-sm-2 col-form-label">LINK DE LINKEDIN</label>
           <div class="col-sm-8">
-              <input type="text" class="form-control" id="linkedinLink" placeholder="" [(ngModel)]="urlLink" (input)="validateUrl()">
-              <div class="alert alert-danger" *ngIf="invalidUrl">
-                  Por favor, ingresa una URL válida de LinkedIn.
-              </div>
+            <input type="text" class="form-control" id="url" placeholder="" [(ngModel)]="graduadoObj.url">
+            <div class="alert alert-danger" *ngIf="alertaUrl">Por favor, ingrese el enlace de LinkedIn o '-' si no tiene.</div>
           </div>
-      </div>
-          
-    
-            <button style="margin-left: 60%;" mat-raised-button color="warn">GUARDAR</button>
-    
+        </div>
+
+        <button (click)="guardarGraduado()" style="margin-left: 60%;" mat-raised-button color="warn">GUARDAR</button>
       </mat-card-content>
-    
-  </mat-card>
+    </mat-card>
   </div>
 </div>
-

@@ -83,29 +83,33 @@
          <mat-card-content>
            <table matSort mat-table [dataSource]="dataSource" class="mat-elevation-z8">
              <!-- Columnas de la tabla -->
-             <ng-container matColumnDef="Grad_Codigo">
+             <ng-container matColumnDef="id">
                <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
-               <td mat-cell *matCellDef="let element">{{element.Grad_Codigo}}</td>
+               <td mat-cell *matCellDef="let element">{{element.id}}</td>
              </ng-container>
    
-             <ng-container matColumnDef="Grad_Nombres">
-               <th mat-sort-header mat-header-cell *matHeaderCellDef> NOMBRE Y APELLIDOS</th>
-               <td mat-cell *matCellDef="let element">{{element.Grad_Nombres}}</td>
+             <ng-container matColumnDef="nombres">
+               <th mat-sort-header mat-header-cell *matHeaderCellDef> NOMBRES Y APELLIDOS</th>
+               <td mat-cell *matCellDef="let element">{{element.nombres}} {{element.apePaterno}} {{element.apeMaterno}}</td>
              </ng-container>
-   
-             <ng-container matColumnDef="email">
-               <th mat-sort-header mat-header-cell *matHeaderCellDef> AÑO DE GRADUACIÓN</th>
-               <td mat-cell *matCellDef="let element">{{element.email}}</td>
-             </ng-container>
-   
-             <ng-container matColumnDef="action">
-               <th mat-header-cell *matHeaderCellDef> EDITAR</th>
-               <td mat-cell *matCellDef="let element">
-                 <button (click)="(element.id)" mat-raised-button color="primary">Edit</button>
-                 <button mat-raised-button color="warn">Delete</button>
-                 <button (click)="(element.id)" mat-raised-button color="primary">Detail</button>
-               </td>
-             </ng-container>
+
+            <ng-container matColumnDef="url">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef> LINKEDIN</th>
+              <td mat-cell *matCellDef="let element">{{element.url}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="placa">
+              <th mat-sort-header mat-header-cell *matHeaderCellDef> PLACA</th>
+              <td mat-cell *matCellDef="let element">{{element.placa.id}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> EDITAR</th>
+              <td mat-cell *matCellDef="let element">
+  
+                <button (click)="editGraduado(element.id)" mat-raised-button color="">Editar</button>
+              </td>
+            </ng-container>
    
              <!-- Agrega más columnas aquí si es necesario -->
    
