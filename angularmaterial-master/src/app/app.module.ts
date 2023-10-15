@@ -29,6 +29,7 @@ import { AuthInterceptor } from './helpers/auth.interceptor';
 import { EditplacaComponent } from './component/editplaca/editplaca.component';
 import { EditdocenteComponent } from './component/editdocente/editdocente.component';
 import { EditasignaturaComponent } from './component/editasignatura/editasignatura.component';
+import { EditgraduadoComponent } from './component/editgraduado/editgraduado.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { EditasignaturaComponent } from './component/editasignatura/editasignatu
     EditplacaComponent,
     EditdocenteComponent,
     EditasignaturaComponent,
+    EditgraduadoComponent,
   ],
   imports: [
     BrowserModule,
