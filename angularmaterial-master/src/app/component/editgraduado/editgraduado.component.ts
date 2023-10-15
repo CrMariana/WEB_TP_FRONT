@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Graduado } from 'src/app/model/Graduado';
 import { Placa } from 'src/app/model/Placa';
 import { MasterService } from 'src/app/service/master.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-editgraduado',
@@ -14,8 +15,8 @@ export class EditgraduadoComponent implements OnInit {
   placas: Placa[] = [];
   alertaNombres: boolean = false;
   alertaApellidos: boolean = false;
-  alertaUrl: boolean = false;
-  alertaPlaca: boolean = false;
+  alertaPlaca: boolean = false; // Agregado para la validación de la placa
+  error: boolean = false;
   soloLectura: boolean = true;
 
   constructor(
@@ -44,50 +45,34 @@ export class EditgraduadoComponent implements OnInit {
     });
   }
 
-  validateUrl(url: string) {
-    if (url.trim() === "" || url.trim() === "-") {
-      this.alertaUrl = false;
-    } else {
-      const urlPattern = /^(http:\/\/|https:\/\/)/i;
-      this.alertaUrl = !urlPattern.test(url);
-    }
-  }
-
   actualizarGraduado() {
+    // Validar campos obligatorios
     if (
       !this.graduadoObj.nombres?.trim() ||
       !this.graduadoObj.apePaterno?.trim() ||
-      !this.graduadoObj.placa ||
-      !this.graduadoObj.url?.trim()
+      this.graduadoObj.placa === null // Agregado para validar la placa
     ) {
       this.alertaNombres = !this.graduadoObj.nombres?.trim();
       this.alertaApellidos = !this.graduadoObj.apePaterno?.trim();
-      this.alertaPlaca = !this.graduadoObj.placa;
-      this.alertaUrl = !this.graduadoObj.url?.trim();
+      this.alertaPlaca = this.graduadoObj.placa === null;
       return;
     } else {
-      const urlPattern = /^(http:\/\/|https:\/\/)/i;
-      if (!urlPattern.test(this.graduadoObj.url)) {
-        this.alertaUrl = true;
-        return;
-      } else {
-        this.alertaNombres = false;
-        this.alertaApellidos = false;
-        this.alertaPlaca = false;
-        this.alertaUrl = false;
+      this.alertaNombres = false;
+      this.alertaApellidos = false;
+      this.alertaPlaca = false;
 
-        this.service.actualizarGraduado(this.graduadoObj).subscribe(
-          (resp: any) => {
-            if (resp.Error) {
-              console.log(resp);
-              // Maneja el error como lo necesites, por ejemplo, mostrar una alerta.
-              return;
-            } else {
-              this.router.navigate(['/graduado']);
-            }
+      this.service.actualizarGraduado(this.graduadoObj).subscribe(
+        (resp: any) => {
+          if (resp.Error) {
+            this.error = true;
+            console.log(resp);
+            return;
+          } else {
+            console.log(this.graduadoObj);
+            this.router.navigate(['/graduado']);
           }
-        );
-      }
+        }
+      );
     }
   }
 

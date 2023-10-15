@@ -52,6 +52,7 @@ const routes: Routes = [
   {path:'editdocente/:id',component:EditdocenteComponent,canActivate:[authGuard]},
   {path:'editasignatura',component:EditdocenteComponent,canActivate:[authGuard]},
   {path:'editasignatura/:id',component:EditasignaturaComponent,canActivate:[authGuard]},
+  {path:'editgraduado',component:EditgraduadoComponent,canActivate:[authGuard]},
   {path:'editgraduado/:id',component:EditgraduadoComponent,canActivate:[authGuard]},
 ];
 
