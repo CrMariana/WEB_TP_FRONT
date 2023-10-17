@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Graduado } from 'src/app/model/Graduado';
 import { Placa } from 'src/app/model/Placa';
 import { MasterService } from 'src/app/service/master.service';
-import { NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms'; // Importamos NgForm
 
 @Component({
   selector: 'app-editgraduado',
@@ -11,11 +11,12 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./editgraduado.component.css']
 })
 export class EditgraduadoComponent implements OnInit {
-  graduadoObj: Graduado = new Graduado();
+  graduadoObj: Graduado = new Graduado
+  placaAux: Placa =new Placa();
   placas: Placa[] = [];
   alertaNombres: boolean = false;
   alertaApellidos: boolean = false;
-  alertaPlaca: boolean = false; // Agregado para la validación de la placa
+  alertaPlaca: boolean = false;
   error: boolean = false;
   soloLectura: boolean = true;
 
@@ -24,6 +25,7 @@ export class EditgraduadoComponent implements OnInit {
     private service: MasterService,
     private router: Router
   ) {}
+
 
   ngOnInit(): void {
     // Obtener la lista de placas
@@ -39,11 +41,14 @@ export class EditgraduadoComponent implements OnInit {
         this.service.buscarGraduado(parametro).subscribe(
           (res: Graduado) => {
             this.graduadoObj = res;
-          }
-        );
+            if (this.graduadoObj && this.graduadoObj.placa) {
+              this.placaAux = this.graduadoObj.placa;
+            }
+        });
       }
     });
   }
+
 
   actualizarGraduado() {
     // Validar campos obligatorios
@@ -60,7 +65,7 @@ export class EditgraduadoComponent implements OnInit {
       this.alertaNombres = false;
       this.alertaApellidos = false;
       this.alertaPlaca = false;
-
+  
       this.service.actualizarGraduado(this.graduadoObj).subscribe(
         (resp: any) => {
           if (resp.Error) {
@@ -68,13 +73,14 @@ export class EditgraduadoComponent implements OnInit {
             console.log(resp);
             return;
           } else {
-            console.log(this.graduadoObj);
+            console.log(resp);
             this.router.navigate(['/graduado']);
           }
         }
       );
     }
   }
+  
 
   cerrarSesion() {
     this.service.deleteToken();
