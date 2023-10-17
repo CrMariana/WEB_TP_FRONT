@@ -26,6 +26,10 @@ import { MaterialModule } from './material-module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './helpers/auth.interceptor';
+import { EditplacaComponent } from './component/editplaca/editplaca.component';
+import { EditdocenteComponent } from './component/editdocente/editdocente.component';
+import { EditasignaturaComponent } from './component/editasignatura/editasignatura.component';
+import { EditgraduadoComponent } from './component/editgraduado/editgraduado.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,10 @@ import { AuthInterceptor } from './helpers/auth.interceptor';
     AgregardocenteComponent,
     AgregarasignaturaComponent,
     AgregarambienteComponent,
+    EditplacaComponent,
+    EditdocenteComponent,
+    EditasignaturaComponent,
+    EditgraduadoComponent,
   ],
   imports: [
     BrowserModule,

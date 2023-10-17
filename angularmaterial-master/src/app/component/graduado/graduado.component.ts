@@ -5,16 +5,18 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router';
-import { graduado } from 'src/app/model/Graduado';
+import { Graduado } from 'src/app/model/Graduado';
+import { Placa } from 'src/app/model/Placa';
 @Component({
   selector: 'app-graduado',
   templateUrl: './graduado.component.html',
   styleUrls: ['./graduado.component.css']
 })
 export class GraduadoComponent {
-  customerlist !: graduado[];
+  placas: Placa[] = [];
+  customerlist !: Graduado[];
   dataSource: any;
-  displayedColumns: string[] = ["Grad_Codigo", "Grad_Nombres", "email", "action"];
+  displayedColumns: string[] = ["id", "nombres", "url","placa","action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
@@ -30,7 +32,7 @@ export class GraduadoComponent {
   loadcustomer() {
     this.service.GetGraduado().subscribe(res => {
       this.customerlist = res;
-      this.dataSource = new MatTableDataSource<graduado>(this.customerlist);
+      this.dataSource = new MatTableDataSource<Graduado>(this.customerlist);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
     });
@@ -39,6 +41,10 @@ export class GraduadoComponent {
   Filterchange(data: Event) {
     const value = (data.target as HTMLInputElement).value;
     this.dataSource.filter = value;
+  }
+
+  editGraduado(id: string) {
+    this.router.navigate(['/editgraduado', id]);
   }
 
   addgraduado(){

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Docente } from 'src/app/model/Docente';
 import { MasterService } from 'src/app/service/master.service';
 
 @Component({
@@ -8,11 +9,10 @@ import { MasterService } from 'src/app/service/master.service';
   styleUrls: ['./agregardocente.component.css']
 })
 export class AgregardocenteComponent {
-  Nombre: string = '';
-  ApellidoP: string = '';
-  inputNombre: boolean = false;
-  inputApellidoP: boolean = false;
-
+  docenteObj: Docente = new Docente;
+  alertaNombres: boolean=false;
+  alertaApellidos: boolean=false;
+  error: boolean=false
   constructor(private router: Router, private service: MasterService) {}
 
   cerrarSesion(){
@@ -20,25 +20,29 @@ export class AgregardocenteComponent {
     this.router.navigate(['']);
   }
 
-  validateNombre() {
-    // Verificar si el valor no está vacío y contiene números
-    if (this.Nombre.trim() !== '' && /\d/.test(this.Nombre)) {
-      this.inputNombre = true;
-    } else {
-      this.inputNombre = false;
+  guardarDocente() {
+    if(!this.docenteObj.nombres?.trim() || !this.docenteObj.apePaterno?.trim()){
+      this.alertaNombres=!this.docenteObj.nombres?.trim()
+      this.alertaApellidos=!this.docenteObj.apePaterno?.trim()
+      return;
+    }else{
+      this.alertaNombres=false
+      this.alertaApellidos=false
+      this.service.crearDocente(this.docenteObj).subscribe(
+        (resp: any) => {
+        if(resp.Error){
+          this.error=true;
+          return;
+        }else{
+          console.log(this.docenteObj)
+          this.router.navigate(['/docente']);
+        }
+      });
     }
+
   }
 
-  validateApellidoP() {
-    // Verificar si el valor no está vacío y contiene números
-    if (this.ApellidoP.trim() !== '' && /\d/.test(this.ApellidoP)) {
-      this.inputApellidoP = true;
-    } else {
-      this.inputApellidoP = false;
-    }
-  }
 
-  //Contenido del menú lateral -->
 visitante(){
   this.router.navigate(['/visitante']);
 }

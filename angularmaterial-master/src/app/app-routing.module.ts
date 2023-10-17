@@ -18,6 +18,10 @@ import { EventoComponent } from './component/evento/evento.component';
 import { VisitanteComponent } from './component/visitante/visitante.component';
 import { AsignaturaComponent } from './component/asignatura/asignatura.component';
 import { authGuard } from './helpers/auth.guard';
+import { EditplacaComponent } from './component/editplaca/editplaca.component';
+import { EditdocenteComponent } from './component/editdocente/editdocente.component';
+import { EditasignaturaComponent } from './component/editasignatura/editasignatura.component';
+import { EditgraduadoComponent } from './component/editgraduado/editgraduado.component';
 
 const routes: Routes = [
 
@@ -42,6 +46,14 @@ const routes: Routes = [
   {path:'visitante',component:VisitanteComponent,canActivate:[authGuard]},
   {path:'asignatura',component:AsignaturaComponent,canActivate:[authGuard]},
   {path:'graduado',component:GraduadoComponent,canActivate:[authGuard]},
+  {path:'editplaca',component:EditplacaComponent,canActivate:[authGuard]},
+  {path:'editplaca/:id',component:EditplacaComponent,canActivate:[authGuard]},
+  {path:'editdocente',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editdocente/:id',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editasignatura',component:EditdocenteComponent,canActivate:[authGuard]},
+  {path:'editasignatura/:id',component:EditasignaturaComponent,canActivate:[authGuard]},
+  {path:'editgraduado',component:EditgraduadoComponent,canActivate:[authGuard]},
+  {path:'editgraduado/:id',component:EditgraduadoComponent,canActivate:[authGuard]},
 ];
 
 @NgModule({

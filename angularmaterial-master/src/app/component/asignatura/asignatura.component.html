@@ -8,7 +8,7 @@
         </button>
         <span>GUIA FIA</span>
       </mat-toolbar>
-  
+
       <mat-drawer-container autosize>
         <mat-drawer #drawer opened="true" mode="side" position="start">
           <mat-nav-list>
@@ -21,43 +21,43 @@
               </div>
             </div>
             <!-- Contenido del menú lateral -->
-            <mat-list-item>
-              <button  (click)="visitante()" mat-button> VISITANTES</button>
-            </mat-list-item>
-  
+             <!-- <mat-list-item>
+            <button (click)="visitante()" mat-button> VISITANTES</button>
+          </mat-list-item>-->
+
             <mat-list-item>
               <button (click)="asignatura()" mat-button>ASIGNATURA</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="docente()" mat-button> DOCENTES</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="graduado()" mat-button> GRADUADOS</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="evento()" mat-button> EVENTO</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="placa()" mat-button> PLACA</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="horario()" mat-button> HORARIO</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="directorio()" mat-button> DIRECTORIO</button>
             </mat-list-item>
-  
+
             <mat-list-item>
               <button (click)="cerrarSesion()" mat-button><mat-icon>exit_to_app</mat-icon>CERRAR SESIÓN</button>
             </mat-list-item>
-  
-  
+
+
           </mat-nav-list>
         </mat-drawer>
         <mat-drawer-content>
@@ -67,7 +67,7 @@
         </mat-drawer-content>
       </mat-drawer-container>
     </div>
-  
+
     <div class="main-content">
       <mat-card>
         <div style="text-align: left; margin: 20px;">
@@ -84,35 +84,34 @@
             <!-- Columnas de la tabla -->
             <ng-container matColumnDef="Asig_Codigo">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> ID</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Codigo}}</td>
+              <td mat-cell *matCellDef="let element">{{element.id}}</td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Asig_Descripcion">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> NOMBRE</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Descripcion}}</td>
+              <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Asig_Tipo">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> TIPO DE ASIGNATURA</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_Tipo}}</td>
+              <td mat-cell *matCellDef="let element">{{element.tipoAsig}}</td>
             </ng-container>
-  
+
             <ng-container matColumnDef="Asig_TipoEstudio">
               <th mat-sort-header mat-header-cell *matHeaderCellDef> TIPO DE ESTUDIO</th>
-              <td mat-cell *matCellDef="let element">{{element.Asig_TipoEstudio}}</td>
+              <td mat-cell *matCellDef="let element">{{element.tipoEstudio}}</td>
             </ng-container>
-  
+
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef> EDITAR</th>
               <td mat-cell *matCellDef="let element">
-                <button (click)="(element.id)" mat-raised-button color="primary">Edit</button>
-                <button mat-raised-button color="warn">Delete</button>
-                <button (click)="(element.id)" mat-raised-button color="primary">Detail</button>
+
+                <button (click)="editAsignatura(element.id)" mat-raised-button color="">Editar</button>
               </td>
             </ng-container>
-  
+
             <!-- Agrega más columnas aquí si es necesario -->
-  
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
           </table>
@@ -124,4 +123,3 @@
       </mat-card>
     </div>
   </div>
-  

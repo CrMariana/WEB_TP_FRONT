@@ -4,21 +4,26 @@ import { MasterService } from 'src/app/service/master.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
-import { docente } from 'src/app/model/Docente';
+import { Docente } from 'src/app/model/Docente';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-docente',
   templateUrl: './docente.component.html',
   styleUrls: ['./docente.component.css']
 })
 export class DocenteComponent {
-  customerlist !: docente[];
+  docentes:Docente[]=[];
   dataSource: any;
-  displayedColumns: string[] = ["Doce_Codigo", "Doce_Nombres","action"];
+  displayedColumns: string[] = ["Doce_Codigo", "Doce_Nombres", "Doce_Apellido","action"];
   @ViewChild(MatPaginator) paginatior !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+  myFormGroup: FormGroup; 
 
-  constructor(private service: MasterService, private dialog: MatDialog, private router: Router) {
+  constructor(private service: MasterService, private dialog: MatDialog, private router: Router, private fb: FormBuilder) {
+    this.myFormGroup = this.fb.group({
+      id: new FormControl('', [Validators.required])
+    });
     this.loadcustomer();
   }
 
@@ -27,10 +32,14 @@ export class DocenteComponent {
     this.router.navigate(['']);
   }
 
+  editDocente(id: string) {
+    this.router.navigate(['/editdocente',id]);
+  }
+
   loadcustomer() {
     this.service.GetDocente().subscribe(res => {
-      this.customerlist = res;
-      this.dataSource = new MatTableDataSource<docente>(this.customerlist);
+      this.docentes = res;
+      this.dataSource = new MatTableDataSource<Docente>(this.docentes);
       this.dataSource.paginator = this.paginatior;
       this.dataSource.sort = this.sort;
     });

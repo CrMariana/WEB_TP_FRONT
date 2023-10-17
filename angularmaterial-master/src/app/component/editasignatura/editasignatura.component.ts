@@ -1,29 +1,51 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Asignatura } from 'src/app/model/Asignatura';
 import { MasterService } from 'src/app/service/master.service';
 
 @Component({
-  selector: 'app-agregarasignatura',
-  templateUrl: './agregarasignatura.component.html',
-  styleUrls: ['./agregarasignatura.component.css']
+  selector: 'app-editasignatura',
+  templateUrl: './editasignatura.component.html',
+  styleUrls: ['./editasignatura.component.css']
 })
-export class AgregarasignaturaComponent {
+export class EditasignaturaComponent {
 
-  asignaturaObj: Asignatura = new Asignatura;
+  asignaturaObj: Asignatura= new Asignatura;
   alertaNombre: boolean=false;
   alertaTipoAsig: boolean=false;
   alertaTipoEstudio: boolean=false;
   error: boolean=false;
+  soloLectura: boolean=true;
 
-  constructor(private router: Router, private service: MasterService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private service: MasterService,
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    // Obtener el ID del docente desde los parámetros de la ruta
+    this.route.paramMap.subscribe((params:any) => {
+      const parametro = {
+        id:parseInt(params.get("id"))
+      }; // Inicializar id con una cadena vacía si params.get('id') es null o undefined
+        this.service.buscarAsignatura(parametro).subscribe(
+          res =>{
+            this.asignaturaObj=res;
+            console.log(res)
+          }
+        )
+        console.log(parametro);
+      });
+  }
 
   cerrarSesion() {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
 
-  guardarAsignatura() {
+
+  actualizarAsignatura(){
     if(!this.asignaturaObj.descripcion?.trim() || !this.asignaturaObj.tipoAsig?.trim() || !this.asignaturaObj.tipoEstudio?.trim()){
       this.alertaNombre=!this.asignaturaObj.descripcion?.trim();
       this.alertaTipoAsig=!this.asignaturaObj.tipoAsig?.trim()
@@ -33,20 +55,20 @@ export class AgregarasignaturaComponent {
       this.alertaNombre=false
       this.alertaTipoAsig=false
       this.alertaTipoEstudio=false
-      this.service.crearAsignatura(this.asignaturaObj).subscribe(
+      this.service.actualizarAsignatura(this.asignaturaObj).subscribe(
         (resp: any) => {
-        // Lógica adicional después de guardar, si es necesario
         if(resp.Error){
           this.error=true;
           return;
         }else{
+          console.log(resp)
           this.router.navigate(['/asignatura']);
         }
       });
     }
+
   }
 
-  //Contenido del menú lateral -->
   visitante() {
     this.router.navigate(['/visitante']);
   }

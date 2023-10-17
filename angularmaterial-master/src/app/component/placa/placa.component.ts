@@ -5,34 +5,41 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MasterService } from 'src/app/service/master.service';
 import { Router } from '@angular/router';
-import { placa } from 'src/app/model/Placa';
+import { Placa } from 'src/app/model/Placa';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-placa',
   templateUrl: './placa.component.html',
   styleUrls: ['./placa.component.css']
 })
+
 export class PlacaComponent {
-  customerlist !: placa[];
+  placas: Placa[] = [];
   dataSource: any;
   displayedColumns: string[] = ["Plac_Codigo", "Plac_Piso", "Pabe_Codigo", "action"];
-  @ViewChild(MatPaginator) paginatior !: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  myFormGroup: FormGroup; // Agregamos el FormGroup aquí
 
-  constructor(private service: MasterService, private dialog: MatDialog, private router: Router) {
+  constructor(private service: MasterService, private dialog: MatDialog, private router: Router, private fb: FormBuilder) {
+    this.myFormGroup = this.fb.group({
+      id: new FormControl('', [Validators.required])
+    });
+
     this.loadcustomer();
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     this.service.deleteToken();
     this.router.navigate(['']);
   }
 
   loadcustomer(): void {
     this.service.GetPlaca().subscribe(res => {
-      this.customerlist = res;
-      this.dataSource = new MatTableDataSource<placa>(this.customerlist);
-      this.dataSource.paginator = this.paginatior;
+      this.placas = res;
+      this.dataSource = new MatTableDataSource<Placa>(this.placas);
+      this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
@@ -42,39 +49,44 @@ export class PlacaComponent {
     this.dataSource.filter = value;
   }
 
-  addplaca(){
+  addplaca() {
     this.router.navigate(['/agregarplaca']);
   }
 
-//Contenido del menú lateral -->
-visitante(){
-  this.router.navigate(['/visitante']);
-}
-asignatura(){
-  this.router.navigate(['/asignatura']);
-}
+  editPlaca(id: string) {
+    this.router.navigate(['/editplaca', id]);
+  }
 
-docente(){
-  this.router.navigate(['/docente']);
-}
+  // Contenido del menú lateral -->
+  visitante() {
+    this.router.navigate(['/visitante']);
+  }
 
-graduado(){
-  this.router.navigate(['/graduado']);
-}
+  asignatura() {
+    this.router.navigate(['/asignatura']);
+  }
 
-evento(){
-  this.router.navigate(['/evento']);
-}
+  docente() {
+    this.router.navigate(['/docente']);
+  }
 
-placa(){
-  this.router.navigate(['/placa']);
-}
+  graduado() {
+    this.router.navigate(['/graduado']);
+  }
 
-horario(){
-  this.router.navigate(['/horario']);
-}
+  evento() {
+    this.router.navigate(['/evento']);
+  }
 
-directorio(){
-  this.router.navigate(['/directorio']);
-}
+  placa() {
+    this.router.navigate(['/placa']);
+  }
+
+  horario() {
+    this.router.navigate(['/horario']);
+  }
+
+  directorio() {
+    this.router.navigate(['/directorio']);
+  }
 }

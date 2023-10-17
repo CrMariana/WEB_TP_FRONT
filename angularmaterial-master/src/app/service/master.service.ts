@@ -5,6 +5,10 @@ import { Area } from '../model/Area';
 import { Pabellon } from '../model/Pabellon';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { Administrador } from '../model/Administrador';
+import { Placa } from '../model/Placa';
+import { Docente } from '../model/Docente';
+import { Asignatura } from '../model/Asignatura';
+import { Graduado } from '../model/Graduado';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +19,15 @@ export class MasterService {
   rutaGlobalArea = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/area/'
   rutaGlobalPabellon = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/pabellon/'
   rutaGlobalLogin = 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/login'
+  rutaGlobalPlaca= 'https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/placa/'
+  rutaGlobalDocente='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/docente/'
+  rutaGlobalAsignatura='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/asignatura/'
+  rutaGlobalGraduado='https://doboz63dga.execute-api.us-east-2.amazonaws.com/pro/graduado/'
+
 
   constructor(private http: HttpClient) { }
+
+  // Métodos Inicio Sesión
 
   Ingresar(administrador: Administrador){
     return this.http.post(this.rutaGlobalLogin,administrador);
@@ -33,6 +44,8 @@ export class MasterService {
   deleteToken(){
     localStorage.removeItem('token');
   }
+
+  // Métodos Ambiente
 
   GetAmbiente() {
     return this.http.get<Ambiente[]>(this.rutaGlobalAmbiente + "listar");
@@ -58,20 +71,78 @@ export class MasterService {
     return this.http.post<Ambiente>(this.rutaGlobalAmbiente + "crear", ambiente);
   }
 
-  // Otros métodos
+  // Métodos Placa
   GetPlaca() {
-    return this.http.get<[]>("");
+    return this.http.get<Placa[]>(this.rutaGlobalPlaca + "listar");
   }
+
+  crearPlaca(placa: Placa) {
+    return this.http.post(this.rutaGlobalPlaca + "crear", placa);
+  }
+
+  BuscarPlaca(id:any) {
+    return this.http.post<Placa>(this.rutaGlobalPlaca + "buscar", id);
+  }
+
+  actualizarPlaca(placa: Placa) {
+    return this.http.post<Placa>(this.rutaGlobalPlaca + "actualizar", placa);
+  }
+
+  // Métodos Docente
+  GetDocente() {
+    return this.http.get<Docente[]>(this.rutaGlobalDocente + "listar");
+  }
+
+  crearDocente(docente: Placa) {
+    return this.http.post(this.rutaGlobalDocente + "crear", docente);
+  }
+
+  BuscarDocente(id:any) {
+    return this.http.post<Docente>(this.rutaGlobalDocente + "buscar", id);
+  }
+
+  actualizarDocente(docente: Docente) {
+    return this.http.post<Docente>(this.rutaGlobalDocente + "actualizar", docente);
+  }
+
+  // Métodos Asignatura
+  GetAsignatura() {
+    return this.http.get<Asignatura[]>(this.rutaGlobalAsignatura + "listar");
+  }
+
+  crearAsignatura(asignatura: Asignatura) {
+    return this.http.post(this.rutaGlobalAsignatura + "crear", asignatura);
+  }
+
+  buscarAsignatura(id:any) {
+    return this.http.post<Asignatura>(this.rutaGlobalAsignatura + "buscar", id);
+  }
+
+  actualizarAsignatura(asignatura: Asignatura) {
+    return this.http.post(this.rutaGlobalGraduado + "actualizar", asignatura);
+  }
+
+  // Métodos Graduado
+  GetGraduado() {
+    return this.http.get<Graduado[]>(this.rutaGlobalGraduado + "listar");
+  }
+
+  crearGraduado(graduado: Graduado) {
+    return this.http.post(this.rutaGlobalGraduado + "crear", graduado);
+  }
+
+  buscarGraduado(id:any) {
+    return this.http.post<Graduado>(this.rutaGlobalGraduado + "buscar", id);
+  }
+
+  actualizarGraduado(graduado: Graduado) {
+    return this.http.post(this.rutaGlobalGraduado + "actualizar", graduado);
+  }
+
+
+  // Otros Métodos
 
   GetVisitante() {
-    return this.http.get<[]>("");
-  }
-
-  GetGraduado() {
-    return this.http.get<[]>("");
-  }
-
-  GetDocente() {
     return this.http.get<[]>("");
   }
 
@@ -83,7 +154,4 @@ export class MasterService {
     return this.http.get<[]>("");
   }
 
-  GetAsignatura() {
-    return this.http.get<[]>("");
-  }
 }
